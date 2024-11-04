@@ -1,215 +1,160 @@
 "use client";
-import { useState } from "react";
+import { motion } from "framer-motion";
 import Card from "../components/ui/Card";
-import Badge from "../components/ui/Badge";
-import Alert from "../components/ui/Alert";
+import { Icon } from "../utils/heroIcons";
+import InfoCard from "../components/admin/InfoCard";
+import ProgressCard from "../components/admin/ProgressCard";
+import NotificationCenter from "../components/admin/NotificationCenter";
+import ActivityItem from "../components/admin/ActivityItem";
 
 export default function AdminDashboard() {
-  const [showWelcome, setShowWelcome] = useState(true);
-
   const stats = [
     {
-      label: "Total Donations",
-      value: "₱150,000",
-      change: "+12.5%",
+      title: "Total Members",
+      value: "1,234",
+      change: "+12%",
       trend: "up",
-      icon: "💰",
+      icon: "users",
     },
     {
-      label: "Active Members",
-      value: "250",
-      change: "+5.2%",
+      title: "Active Projects",
+      value: "45",
+      change: "+5%",
       trend: "up",
-      icon: "👥",
+      icon: "folder",
     },
     {
-      label: "Upcoming Events",
-      value: "5",
-      change: "0%",
-      trend: "neutral",
-      icon: "📅",
-    },
-    {
-      label: "Current Sponsors",
-      value: "12",
-      change: "-2.1%",
+      title: "Monthly Donations",
+      value: "$25,678",
+      change: "-2%",
       trend: "down",
-      icon: "🤝",
+      icon: "heart",
+    },
+    {
+      title: "Upcoming Events",
+      value: "12",
+      change: "+3",
+      trend: "up",
+      icon: "calendar",
+    },
+  ];
+
+  const projects = [
+    {
+      name: "Clean Water Initiative",
+      progress: 75,
+      status: "On Track",
+    },
+    {
+      name: "Youth Education Program",
+      progress: 45,
+      status: "At Risk",
+    },
+    {
+      name: "Community Health Drive",
+      progress: 90,
+      status: "On Track",
     },
   ];
 
   const recentActivity = [
     {
-      type: "donation",
-      description: "New donation received",
-      amount: "₱5,000",
-      donor: "John Smith",
-      time: "2 minutes ago",
-      icon: "💰",
+      type: "member",
+      title: "New Member Registration",
+      description: "Sarah Johnson joined as a new member",
+      time: "2 hours ago",
     },
     {
-      type: "member",
-      description: "New member registration",
-      name: "Maria Garcia",
-      role: "Regular Member",
-      time: "1 hour ago",
-      icon: "👤",
+      type: "donation",
+      title: "Donation Received",
+      description: "Received $1,000 from Anonymous Donor",
+      time: "4 hours ago",
     },
     {
       type: "event",
-      description: "Event registration update",
-      event: "Annual Charity Gala",
-      count: "120 attendees",
-      time: "3 hours ago",
-      icon: "📅",
-    },
-  ];
-
-  const upcomingTasks = [
-    {
-      title: "Review Donation Reports",
-      deadline: "Today",
-      priority: "high",
-    },
-    {
-      title: "Approve Event Proposals",
-      deadline: "Tomorrow",
-      priority: "medium",
-    },
-    {
-      title: "Update Monthly Newsletter",
-      deadline: "Next Week",
-      priority: "low",
+      title: "Event Created",
+      description: "Annual Charity Gala scheduled for March 15",
+      time: "6 hours ago",
     },
   ];
 
   return (
     <div className="space-y-6">
-      {/* Welcome Alert */}
-      {showWelcome && (
-        <Alert variant="info" onClose={() => setShowWelcome(false)}>
-          <div className="flex items-center">
-            <span className="text-lg mr-2">👋</span>
-            <div>
-              <h3 className="font-medium">Welcome back, Admin!</h3>
-              <p className="text-sm">
-                Here's what's happening with your organization today.
-              </p>
-            </div>
-          </div>
-        </Alert>
-      )}
+      {/* Page Title */}
+      <div className="flex justify-between items-center">
+        <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
+        <div className="flex gap-2">
+          <button className="px-4 py-2 bg-white rounded-lg border hover:bg-gray-50">
+            Export
+          </button>
+          <button className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+            Generate Report
+          </button>
+        </div>
+      </div>
 
       {/* Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
         {stats.map((stat) => (
-          <Card
-            key={stat.label}
-            className="p-6 hover:shadow-lg transition-shadow"
+          <motion.div
+            key={stat.title}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
           >
-            <div className="flex items-center justify-between mb-4">
-              <span className="text-2xl">{stat.icon}</span>
-              <Badge
-                variant={
-                  stat.trend === "up"
-                    ? "success"
-                    : stat.trend === "down"
-                    ? "danger"
-                    : "info"
-                }
-              >
-                {stat.change}
-              </Badge>
-            </div>
-            <h3 className="text-gray-500 text-sm">{stat.label}</h3>
-            <p className="text-2xl font-bold mt-1">{stat.value}</p>
-          </Card>
+            <InfoCard
+              title={stat.title}
+              value={stat.value}
+              change={stat.change}
+              trend={stat.trend}
+              icon={stat.icon}
+            />
+          </motion.div>
         ))}
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Recent Activity */}
-        <Card className="lg:col-span-2">
-          <div className="p-6">
-            <h2 className="text-xl font-bold mb-4">Recent Activity</h2>
-            <div className="space-y-4">
-              {recentActivity.map((activity, index) => (
-                <div
-                  key={index}
-                  className="flex items-center p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
-                >
-                  <span className="text-2xl mr-4">{activity.icon}</span>
-                  <div className="flex-1">
-                    <p className="font-medium">{activity.description}</p>
-                    <div className="text-sm text-gray-500 mt-1">
-                      {activity.amount || activity.name || activity.event}
-                    </div>
-                  </div>
-                  <span className="text-sm text-gray-500">{activity.time}</span>
-                </div>
+      {/* Main Content Grid */}
+      <div className="grid lg:grid-cols-3 gap-6">
+        {/* Projects Progress */}
+        <div className="lg:col-span-2">
+          <Card className="p-6">
+            <div className="flex justify-between items-center mb-6">
+              <h2 className="text-lg font-bold">Project Progress</h2>
+              <button className="text-blue-600 hover:text-blue-700">
+                View All
+              </button>
+            </div>
+            <div className="space-y-6">
+              {projects.map((project) => (
+                <ProgressCard
+                  key={project.name}
+                  name={project.name}
+                  progress={project.progress}
+                  status={project.status}
+                />
               ))}
             </div>
-          </div>
-        </Card>
+          </Card>
+        </div>
 
-        {/* Tasks & Reminders */}
-        <Card>
-          <div className="p-6">
-            <h2 className="text-xl font-bold mb-4">Tasks & Reminders</h2>
-            <div className="space-y-4">
-              {upcomingTasks.map((task, index) => (
-                <div
-                  key={index}
-                  className="flex items-center justify-between p-4 bg-gray-50 rounded-lg"
-                >
-                  <div>
-                    <p className="font-medium">{task.title}</p>
-                    <p className="text-sm text-gray-500">
-                      Due: {task.deadline}
-                    </p>
-                  </div>
-                  <Badge
-                    variant={
-                      task.priority === "high"
-                        ? "danger"
-                        : task.priority === "medium"
-                        ? "warning"
-                        : "info"
-                    }
-                  >
-                    {task.priority}
-                  </Badge>
-                </div>
-              ))}
-            </div>
-          </div>
-        </Card>
+        {/* Notifications */}
+        <div className="lg:col-span-1">
+          <NotificationCenter />
+        </div>
       </div>
 
-      {/* Quick Actions */}
-      <Card>
-        <div className="p-6">
-          <h2 className="text-xl font-bold mb-4">Quick Actions</h2>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {[
-              { label: "Create News Post", icon: "📰" },
-              { label: "Add Event", icon: "📅" },
-              { label: "Upload Bulletin", icon: "📑" },
-              { label: "View Reports", icon: "📊" },
-            ].map((action) => (
-              <button
-                key={action.label}
-                className="p-4 text-center bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors group"
-              >
-                <span className="text-2xl group-hover:scale-110 inline-block transition-transform">
-                  {action.icon}
-                </span>
-                <span className="block mt-2 text-sm font-medium text-gray-600">
-                  {action.label}
-                </span>
-              </button>
-            ))}
-          </div>
+      {/* Recent Activity */}
+      <Card className="p-6">
+        <h2 className="text-lg font-bold mb-6">Recent Activity</h2>
+        <div className="space-y-4">
+          {recentActivity.map((activity, index) => (
+            <ActivityItem
+              key={index}
+              type={activity.type}
+              title={activity.title}
+              description={activity.description}
+              time={activity.time}
+            />
+          ))}
         </div>
       </Card>
     </div>
