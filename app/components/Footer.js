@@ -1,132 +1,127 @@
 import Link from "next/link";
 import Image from "next/image";
+import { Icon } from "../utils/heroIcons";
 
 export default function Footer() {
+  const currentYear = new Date().getFullYear();
+
+  const footerSections = [
+    {
+      title: "About Us",
+      links: [
+        { label: "Our History", href: "/about#history" },
+        { label: "Leadership", href: "/about#leadership" },
+        { label: "Mission & Vision", href: "/about#mission" },
+        { label: "Annual Reports", href: "/about#reports" },
+      ],
+    },
+    {
+      title: "Get Involved",
+      links: [
+        { label: "Become a Member", href: "/membership" },
+        { label: "Volunteer", href: "/volunteer" },
+        { label: "Donate", href: "/donate" },
+        { label: "Partner With Us", href: "/partnership" },
+      ],
+    },
+    {
+      title: "Resources",
+      links: [
+        { label: "News & Updates", href: "/news" },
+        { label: "Events Calendar", href: "/events" },
+        { label: "Bulletins", href: "/bulletins" },
+        { label: "Photo Gallery", href: "/gallery" },
+      ],
+    },
+    {
+      title: "Contact",
+      links: [
+        { label: "Contact Us", href: "/contact" },
+        { label: "FAQs", href: "/faqs" },
+        { label: "Find a Club", href: "/clubs" },
+        { label: "Support", href: "/support" },
+      ],
+    },
+  ];
+
+  const socialLinks = [
+    { icon: "facebook", href: "#", label: "Facebook" },
+    { icon: "twitter", href: "#", label: "Twitter" },
+    { icon: "instagram", href: "#", label: "Instagram" },
+    { icon: "linkedin", href: "#", label: "LinkedIn" },
+    { icon: "youtube", href: "#", label: "YouTube" },
+  ];
+
   return (
-    <footer className="bg-white border-t">
+    <footer className="bg-gray-900 text-white">
       <div className="container mx-auto px-4">
-        {/* Main Footer */}
-        <div className="py-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {/* Brand Section */}
-          <div className="space-y-4">
-            <div className="flex items-center space-x-3">
-              <div className="relative w-10 h-10">
-                <Image
-                  src="/rotary-logo.png"
-                  alt="Rotary Logo"
-                  fill
-                  className="object-contain"
-                />
-              </div>
-              <span className="text-xl font-bold text-gray-900">Rotary</span>
-            </div>
-            <p className="text-gray-600">
-              Making a difference in our community through service and
-              leadership.
+        {/* Main Footer Content */}
+        <div className="py-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-8">
+          {/* Logo and Description */}
+          <div className="lg:col-span-2">
+            <Link href="/" className="flex items-center space-x-2 mb-6">
+              <Image
+                src="/logo-white.png"
+                alt="Rotary Club Logo"
+                width={40}
+                height={40}
+                className="w-auto h-10"
+              />
+              <span className="font-bold text-xl">Rotary Club</span>
+            </Link>
+            <p className="text-gray-400 mb-6">
+              Service Above Self - Join us in making a difference in communities
+              worldwide through humanitarian service and ethical leadership.
             </p>
             <div className="flex space-x-4">
               {socialLinks.map((social) => (
                 <a
-                  key={social.name}
+                  key={social.label}
                   href={social.href}
-                  className="text-gray-400 hover:text-gray-500 transition-colors"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  className="text-gray-400 hover:text-white transition-colors"
+                  aria-label={social.label}
                 >
-                  <span className="sr-only">{social.name}</span>
-                  <social.icon className="h-6 w-6" />
+                  <Icon name={social.icon} className="w-6 h-6" />
                 </a>
               ))}
             </div>
           </div>
 
-          {/* Quick Links */}
-          <div>
-            <h3 className="text-sm font-semibold text-gray-900 uppercase tracking-wider mb-4">
-              Quick Links
-            </h3>
-            <ul className="space-y-3">
-              {quickLinks.map((link) => (
-                <li key={link.name}>
-                  <Link
-                    href={link.href}
-                    className="text-gray-600 hover:text-blue-600 transition-colors"
-                  >
-                    {link.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Get Involved */}
-          <div>
-            <h3 className="text-sm font-semibold text-gray-900 uppercase tracking-wider mb-4">
-              Get Involved
-            </h3>
-            <ul className="space-y-3">
-              {getInvolvedLinks.map((link) => (
-                <li key={link.name}>
-                  <Link
-                    href={link.href}
-                    className="text-gray-600 hover:text-blue-600 transition-colors"
-                  >
-                    {link.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Newsletter */}
-          <div>
-            <h3 className="text-sm font-semibold text-gray-900 uppercase tracking-wider mb-4">
-              Stay Updated
-            </h3>
-            <p className="text-gray-600 mb-4">
-              Subscribe to our newsletter for the latest updates and news.
-            </p>
-            <form className="space-y-2">
-              <input
-                type="email"
-                placeholder="Enter your email"
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-              />
-              <button
-                type="submit"
-                className="w-full bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
-              >
-                Subscribe
-              </button>
-            </form>
-          </div>
+          {/* Footer Links */}
+          {footerSections.map((section) => (
+            <div key={section.title}>
+              <h3 className="font-bold text-lg mb-4">{section.title}</h3>
+              <ul className="space-y-3">
+                {section.links.map((link) => (
+                  <li key={link.label}>
+                    <Link
+                      href={link.href}
+                      className="text-gray-400 hover:text-white transition-colors"
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </div>
 
-        {/* Bottom Footer */}
-        <div className="py-6 border-t border-gray-100">
+        {/* Bottom Bar */}
+        <div className="border-t border-gray-800 py-8">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-            <p className="text-gray-500 text-sm">
-              © {new Date().getFullYear()} Rotary Organization. All rights
-              reserved.
-            </p>
-            <div className="flex space-x-6">
-              <Link
-                href="/privacy"
-                className="text-sm text-gray-500 hover:text-gray-900"
-              >
+            <div className="text-gray-400 text-sm">
+              © {currentYear} Rotary Club. All rights reserved.
+            </div>
+            <div className="flex space-x-6 text-sm">
+              <Link href="/privacy" className="text-gray-400 hover:text-white">
                 Privacy Policy
               </Link>
-              <Link
-                href="/terms"
-                className="text-sm text-gray-500 hover:text-gray-900"
-              >
+              <Link href="/terms" className="text-gray-400 hover:text-white">
                 Terms of Service
               </Link>
-              <Link
-                href="/contact"
-                className="text-sm text-gray-500 hover:text-gray-900"
-              >
-                Contact Us
+              <Link href="/sitemap" className="text-gray-400 hover:text-white">
+                Sitemap
               </Link>
             </div>
           </div>
@@ -135,34 +130,3 @@ export default function Footer() {
     </footer>
   );
 }
-
-const socialLinks = [
-  {
-    name: "Facebook",
-    href: "#",
-    icon: (props) => (
-      <svg fill="currentColor" viewBox="0 0 24 24" {...props}>
-        <path
-          fillRule="evenodd"
-          d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"
-          clipRule="evenodd"
-        />
-      </svg>
-    ),
-  },
-  // Add more social media icons as needed
-];
-
-const quickLinks = [
-  { name: "About Us", href: "/about" },
-  { name: "News", href: "/news" },
-  { name: "Events", href: "/events" },
-  { name: "Bulletins", href: "/bulletins" },
-];
-
-const getInvolvedLinks = [
-  { name: "Donate", href: "/donate" },
-  { name: "Become a Member", href: "/volunteer" },
-  { name: "Sponsorship", href: "/sponsor" },
-  { name: "Projects", href: "/projects" },
-];
