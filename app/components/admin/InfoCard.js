@@ -1,36 +1,26 @@
-export default function InfoCard({
-  icon,
-  title,
-  value,
-  description,
-  trend,
-  actions,
-  className = "",
-}) {
+import { Icon } from "../../utils/heroIcons";
+
+export default function InfoCard({ title, value, change, trend, icon }) {
   return (
-    <div className={`bg-white rounded-lg p-6 shadow-sm ${className}`}>
-      <div className="flex items-start justify-between">
-        <div className="flex items-center">
-          {icon && <span className="text-2xl mr-3">{icon}</span>}
-          <div>
-            <h3 className="text-sm font-medium text-gray-500">{title}</h3>
-            <p className="mt-1 text-2xl font-bold">{value}</p>
-          </div>
+    <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+      <div className="flex justify-between items-start">
+        <div className="w-12 h-12 rounded-lg bg-blue-50 flex items-center justify-center">
+          <Icon name={icon} className="w-6 h-6 text-blue-600" />
         </div>
-        {trend && (
+        {change && (
           <span
-            className={`text-sm font-medium ${
-              trend > 0 ? "text-green-600" : "text-red-600"
+            className={`text-sm font-medium px-2.5 py-0.5 rounded-full ${
+              trend === "up"
+                ? "text-green-600 bg-green-50"
+                : "text-red-600 bg-red-50"
             }`}
           >
-            {trend > 0 ? "↑" : "↓"} {Math.abs(trend)}%
+            {change}
           </span>
         )}
       </div>
-      {description && (
-        <p className="mt-2 text-sm text-gray-500">{description}</p>
-      )}
-      {actions && <div className="mt-4 space-x-3">{actions}</div>}
+      <h3 className="text-lg font-semibold text-gray-800 mt-4">{title}</h3>
+      <p className="text-3xl font-bold text-gray-900 mt-2">{value}</p>
     </div>
   );
 }

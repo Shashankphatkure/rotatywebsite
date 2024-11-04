@@ -8,52 +8,69 @@ import Badge from "../../components/ui/Badge";
 import { Icon } from "../../utils/heroIcons";
 import SearchBar from "../../components/admin/SearchBar";
 
-export default function EventsPage() {
+export default function ProjectsPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedStatus, setSelectedStatus] = useState("All");
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [view, setView] = useState("grid");
 
-  const statuses = ["All", "Upcoming", "Ongoing", "Completed", "Cancelled"];
-  const categories = [
-    "All",
-    "Fundraising",
-    "Service",
-    "Training",
-    "Social",
-    "Conference",
-  ];
+  const statuses = ["All", "Active", "On Hold", "Completed", "Planning"];
+  const categories = ["All", "Education", "Health", "Environment", "Community"];
 
-  const events = [
+  const projects = [
     {
       id: 1,
-      title: "Annual Charity Gala",
+      title: "Clean Water Initiative",
       description:
-        "A night of celebration and fundraising for our community projects.",
-      date: "2024-03-15",
-      time: "18:00",
-      location: "Grand Hotel Ballroom",
-      category: "Fundraising",
-      status: "Upcoming",
+        "Providing clean water access to rural communities in East Africa",
+      startDate: "2024-01-15",
+      endDate: "2024-12-31",
+      category: "Environment",
+      status: "Active",
+      progress: 65,
+      budget: "$50,000",
+      spent: "$32,500",
+      location: "East Africa",
+      manager: "Sarah Johnson",
+      team: [
+        { name: "John Doe", role: "Field Coordinator" },
+        { name: "Jane Smith", role: "Technical Lead" },
+      ],
       image:
-        "https://images.unsplash.com/photo-1511578314322-379afb476865?w=800",
-      registrations: 180,
-      capacity: 250,
-      organizer: "Events Committee",
-      budget: "$15,000",
-      sponsors: ["ABC Corp", "XYZ Inc"],
+        "https://images.unsplash.com/photo-1541544537156-7627a7a4aa1c?w=800",
+      milestones: [
+        { title: "Site Assessment", status: "Completed", date: "2024-02-01" },
+        {
+          title: "Equipment Installation",
+          status: "In Progress",
+          date: "2024-03-15",
+        },
+        { title: "Community Training", status: "Pending", date: "2024-04-01" },
+      ],
+      risks: [
+        {
+          type: "Weather Conditions",
+          severity: "Medium",
+          mitigation: "Flexible schedule",
+        },
+        {
+          type: "Supply Chain",
+          severity: "High",
+          mitigation: "Local sourcing",
+        },
+      ],
     },
-    // Add more events...
+    // Add more projects...
   ];
 
-  const filteredEvents = events.filter((event) => {
+  const filteredProjects = projects.filter((project) => {
     const matchesSearch =
-      event.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      event.description.toLowerCase().includes(searchQuery.toLowerCase());
+      project.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      project.description.toLowerCase().includes(searchQuery.toLowerCase());
     const matchesStatus =
-      selectedStatus === "All" || event.status === selectedStatus;
+      selectedStatus === "All" || project.status === selectedStatus;
     const matchesCategory =
-      selectedCategory === "All" || event.category === selectedCategory;
+      selectedCategory === "All" || project.category === selectedCategory;
     return matchesSearch && matchesStatus && matchesCategory;
   });
 
@@ -62,12 +79,12 @@ export default function EventsPage() {
       {/* Page Header */}
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Events</h1>
-          <p className="text-gray-500">Manage and monitor event activities</p>
+          <h1 className="text-2xl font-bold text-gray-900">Projects</h1>
+          <p className="text-gray-500">Manage and monitor project progress</p>
         </div>
         <Button variant="primary">
           <Icon name="plus" className="w-5 h-5 mr-2" />
-          Create Event
+          Create Project
         </Button>
       </div>
 
@@ -75,29 +92,19 @@ export default function EventsPage() {
       <div className="grid md:grid-cols-4 gap-6">
         {[
           {
-            label: "Total Events",
+            label: "Total Projects",
             value: "45",
             change: "+5",
-            icon: "calendar",
+            icon: "folder",
           },
+          { label: "Active Projects", value: "28", change: "+3", icon: "play" },
           {
-            label: "Upcoming Events",
-            value: "12",
-            change: "+2",
-            icon: "clock",
-          },
-          {
-            label: "Total Registrations",
-            value: "1,250",
-            change: "+85",
-            icon: "users",
-          },
-          {
-            label: "Revenue Generated",
-            value: "$25K",
-            change: "+12%",
+            label: "Budget Utilized",
+            value: "$1.2M",
+            change: "+15%",
             icon: "dollar",
           },
+          { label: "Team Members", value: "124", change: "+8", icon: "users" },
         ].map((stat) => (
           <Card key={stat.label} className="p-6">
             <div className="flex justify-between items-start">
@@ -126,7 +133,7 @@ export default function EventsPage() {
           <SearchBar
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Search events..."
+            placeholder="Search projects..."
           />
         </div>
         <div className="flex items-center space-x-4">
@@ -177,85 +184,104 @@ export default function EventsPage() {
         </div>
       </div>
 
-      {/* Events Grid/Table */}
+      {/* Projects Grid/Table */}
       {view === "grid" ? (
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredEvents.map((event) => (
+          {filteredProjects.map((project) => (
             <motion.div
-              key={event.id}
+              key={project.id}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
             >
               <Card className="h-full">
                 <div className="relative h-48">
                   <Image
-                    src={event.image}
-                    alt={event.title}
+                    src={project.image}
+                    alt={project.title}
                     fill
                     className="object-cover rounded-t-lg"
                   />
                   <div className="absolute top-4 right-4">
-                    <Badge variant="primary">{event.category}</Badge>
+                    <Badge variant="primary">{project.category}</Badge>
                   </div>
                   <div className="absolute top-4 left-4">
                     <Badge
                       variant={
-                        event.status === "Upcoming"
+                        project.status === "Active"
                           ? "success"
-                          : event.status === "Cancelled"
-                          ? "danger"
-                          : "warning"
+                          : project.status === "On Hold"
+                          ? "warning"
+                          : "secondary"
                       }
                     >
-                      {event.status}
+                      {project.status}
                     </Badge>
                   </div>
                 </div>
                 <div className="p-6">
-                  <h3 className="text-xl font-bold mb-2">{event.title}</h3>
-                  <p className="text-gray-600 mb-4">{event.description}</p>
-                  <div className="space-y-2 text-sm text-gray-600">
-                    <div className="flex items-center">
-                      <Icon name="calendar" className="w-4 h-4 mr-2" />
-                      <span>{new Date(event.date).toLocaleDateString()}</span>
+                  <h3 className="text-xl font-bold mb-2">{project.title}</h3>
+                  <p className="text-gray-600 mb-4">{project.description}</p>
+
+                  <div className="space-y-4">
+                    <div>
+                      <div className="flex justify-between text-sm mb-1">
+                        <span>Progress</span>
+                        <span>{project.progress}%</span>
+                      </div>
+                      <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
+                        <div
+                          className="h-full bg-blue-600 rounded-full"
+                          style={{ width: `${project.progress}%` }}
+                        />
+                      </div>
                     </div>
-                    <div className="flex items-center">
-                      <Icon name="clock" className="w-4 h-4 mr-2" />
-                      <span>{event.time}</span>
+
+                    <div className="grid grid-cols-2 gap-4 text-sm">
+                      <div>
+                        <span className="text-gray-500">Budget</span>
+                        <p className="font-semibold">{project.budget}</p>
+                      </div>
+                      <div>
+                        <span className="text-gray-500">Spent</span>
+                        <p className="font-semibold">{project.spent}</p>
+                      </div>
                     </div>
-                    <div className="flex items-center">
-                      <Icon name="location" className="w-4 h-4 mr-2" />
-                      <span>{event.location}</span>
+
+                    <div className="space-y-2">
+                      <div className="flex items-center text-sm text-gray-600">
+                        <Icon name="location" className="w-4 h-4 mr-2" />
+                        <span>{project.location}</span>
+                      </div>
+                      <div className="flex items-center text-sm text-gray-600">
+                        <Icon name="user" className="w-4 h-4 mr-2" />
+                        <span>{project.manager}</span>
+                      </div>
+                    </div>
+
+                    <div className="flex -space-x-2">
+                      {project.team.map((member, index) => (
+                        <div
+                          key={member.name}
+                          className="w-8 h-8 rounded-full bg-gray-200 border-2 border-white flex items-center justify-center text-xs font-medium"
+                          title={`${member.name} - ${member.role}`}
+                        >
+                          {member.name.charAt(0)}
+                        </div>
+                      ))}
+                      <div className="w-8 h-8 rounded-full bg-gray-100 border-2 border-white flex items-center justify-center text-xs font-medium">
+                        +{project.team.length}
+                      </div>
                     </div>
                   </div>
-                  <div className="mt-4 pt-4 border-t">
-                    <div className="flex justify-between items-center mb-2">
-                      <span className="text-sm text-gray-600">
-                        Registrations
-                      </span>
-                      <span className="text-sm font-medium">
-                        {event.registrations}/{event.capacity}
-                      </span>
-                    </div>
-                    <div className="h-2 bg-gray-200 rounded-full">
-                      <div
-                        className="h-full bg-blue-600 rounded-full"
-                        style={{
-                          width: `${
-                            (event.registrations / event.capacity) * 100
-                          }%`,
-                        }}
-                      />
-                    </div>
-                  </div>
+
                   <div className="mt-6 flex space-x-2">
                     <Button variant="outline" className="flex-1">
                       <Icon name="edit" className="w-4 h-4 mr-2" />
                       Edit
                     </Button>
                     <Button variant="outline" className="flex-1">
-                      <Icon name="users" className="w-4 h-4 mr-2" />
-                      Attendees
+                      <Icon name="chart" className="w-4 h-4 mr-2" />
+                      Details
                     </Button>
                   </div>
                 </div>
@@ -270,10 +296,7 @@ export default function EventsPage() {
               <thead className="bg-gray-50">
                 <tr>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Event
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Date & Time
+                    Project
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Category
@@ -282,7 +305,10 @@ export default function EventsPage() {
                     Status
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Registrations
+                    Progress
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Budget
                   </th>
                   <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Actions
@@ -290,63 +316,63 @@ export default function EventsPage() {
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
-                {filteredEvents.map((event) => (
-                  <tr key={event.id} className="hover:bg-gray-50">
+                {filteredProjects.map((project) => (
+                  <tr key={project.id} className="hover:bg-gray-50">
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="flex items-center">
                         <div className="relative w-10 h-10 rounded overflow-hidden">
                           <Image
-                            src={event.image}
-                            alt={event.title}
+                            src={project.image}
+                            alt={project.title}
                             fill
                             className="object-cover"
                           />
                         </div>
                         <div className="ml-4">
                           <div className="text-sm font-medium text-gray-900">
-                            {event.title}
+                            {project.title}
                           </div>
                           <div className="text-sm text-gray-500">
-                            {event.location}
+                            {project.manager}
                           </div>
                         </div>
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm text-gray-900">
-                        {new Date(event.date).toLocaleDateString()}
-                      </div>
-                      <div className="text-sm text-gray-500">{event.time}</div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <Badge variant="primary">{event.category}</Badge>
+                      <Badge variant="primary">{project.category}</Badge>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <Badge
                         variant={
-                          event.status === "Upcoming"
+                          project.status === "Active"
                             ? "success"
-                            : event.status === "Cancelled"
-                            ? "danger"
-                            : "warning"
+                            : project.status === "On Hold"
+                            ? "warning"
+                            : "secondary"
                         }
                       >
-                        {event.status}
+                        {project.status}
                       </Badge>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm text-gray-900">
-                        {event.registrations}/{event.capacity}
+                      <div>
+                        <div className="text-sm text-gray-900 mb-1">
+                          {project.progress}%
+                        </div>
+                        <div className="w-24 h-1.5 bg-gray-200 rounded-full">
+                          <div
+                            className="h-full bg-blue-600 rounded-full"
+                            style={{ width: `${project.progress}%` }}
+                          />
+                        </div>
                       </div>
-                      <div className="w-24 h-1.5 bg-gray-200 rounded-full mt-1">
-                        <div
-                          className="h-full bg-blue-600 rounded-full"
-                          style={{
-                            width: `${
-                              (event.registrations / event.capacity) * 100
-                            }%`,
-                          }}
-                        />
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <div className="text-sm text-gray-900">
+                        {project.budget}
+                      </div>
+                      <div className="text-sm text-gray-500">
+                        Spent: {project.spent}
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
@@ -354,7 +380,7 @@ export default function EventsPage() {
                         Edit
                       </button>
                       <button className="text-red-600 hover:text-red-900">
-                        Cancel
+                        Delete
                       </button>
                     </td>
                   </tr>
@@ -371,7 +397,8 @@ export default function EventsPage() {
           <span className="text-sm text-gray-700">
             Showing <span className="font-medium">1</span> to{" "}
             <span className="font-medium">10</span> of{" "}
-            <span className="font-medium">{filteredEvents.length}</span> results
+            <span className="font-medium">{filteredProjects.length}</span>{" "}
+            results
           </span>
         </div>
         <div className="flex items-center space-x-2">
