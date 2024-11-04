@@ -15,43 +15,53 @@ export default function AdminLayout({ children }) {
       icon: "dashboard",
       href: "/admin",
       badge: null,
+      color: "text-blue-500",
     },
     {
       label: "Members",
       icon: "users",
       href: "/admin/members",
       badge: "23",
+      color: "text-green-500",
     },
     {
       label: "Events",
       icon: "calendar",
       href: "/admin/events",
       badge: "5",
+      color: "text-purple-500",
     },
     {
       label: "Projects",
       icon: "folder",
       href: "/admin/projects",
       badge: "12",
+      color: "text-orange-500",
     },
     {
       label: "Donations",
       icon: "heart",
       href: "/admin/donations",
       badge: null,
+      color: "text-red-500",
     },
     {
       label: "Bulletins",
       icon: "document",
       href: "/admin/bulletins",
       badge: "3",
+      color: "text-yellow-500",
     },
     {
       label: "Reports",
       icon: "chart",
       href: "/admin/reports",
       badge: null,
+      color: "text-indigo-500",
     },
+  ];
+
+  const utilityItems = [
     {
       label: "Settings",
       icon: "settings",
@@ -71,58 +81,119 @@ export default function AdminLayout({ children }) {
         <div className="flex flex-col h-full">
           {/* Logo */}
           <div className="flex items-center gap-2 px-6 py-5 border-b">
-            <Image
-              src="https://upload.wikimedia.org/wikipedia/commons/4/42/Rotary_International_Logo.svg"
-              alt="Logo"
-              width={32}
-              height={32}
-            />
+            <div className="relative w-8 h-8">
+              <Image
+                src="https://upload.wikimedia.org/wikipedia/commons/4/42/Rotary_International_Logo.svg"
+                alt="Logo"
+                fill
+                className="object-contain"
+              />
+            </div>
             <div>
-              <span className="text-xl font-bold text-gray-900">
+              <span className="text-lg font-bold text-gray-900">
                 Rotary Admin
               </span>
-              <span className="text-xs text-gray-500 block">
-                Management Console
-              </span>
+              <span className="text-xs text-gray-500 block">v2.0.0</span>
             </div>
           </div>
 
           {/* Navigation */}
-          <nav className="flex-1 px-3 py-4 space-y-1 overflow-y-auto">
-            {menuItems.map((item) => (
-              <Link
-                key={item.label}
-                href={item.href}
-                className={`flex items-center justify-between px-3 py-2.5 rounded-lg transition-all duration-200 ${
-                  activeMenu === item.label.toLowerCase()
-                    ? "bg-blue-50 text-blue-600"
-                    : "text-gray-600 hover:bg-gray-50"
-                }`}
-                onClick={() => setActiveMenu(item.label.toLowerCase())}
-              >
-                <div className="flex items-center">
-                  <Icon name={item.icon} className="w-5 h-5 mr-3" />
+          <nav className="flex-1 px-4 py-4 space-y-1 overflow-y-auto">
+            <div className="mb-8">
+              <div className="px-3 mb-2">
+                <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                  Main
+                </h3>
+              </div>
+              {menuItems.map((item) => (
+                <Link
+                  key={item.label}
+                  href={item.href}
+                  className={`flex items-center justify-between px-3 py-2.5 rounded-lg transition-all duration-200 group ${
+                    activeMenu === item.label.toLowerCase()
+                      ? "bg-blue-50 text-blue-600"
+                      : "text-gray-600 hover:bg-gray-50"
+                  }`}
+                  onClick={() => setActiveMenu(item.label.toLowerCase())}
+                >
+                  <div className="flex items-center">
+                    <div
+                      className={`w-8 h-8 rounded-lg flex items-center justify-center mr-3 transition-colors ${
+                        activeMenu === item.label.toLowerCase()
+                          ? "bg-blue-100"
+                          : "bg-gray-100 group-hover:bg-gray-200"
+                      }`}
+                    >
+                      <Icon
+                        name={item.icon}
+                        className={`w-5 h-5 ${
+                          activeMenu === item.label.toLowerCase()
+                            ? "text-blue-600"
+                            : item.color
+                        }`}
+                      />
+                    </div>
+                    <span className="font-medium">{item.label}</span>
+                  </div>
+                  {item.badge && (
+                    <span
+                      className={`px-2 py-0.5 text-xs font-medium rounded-full ${
+                        activeMenu === item.label.toLowerCase()
+                          ? "bg-blue-100 text-blue-600"
+                          : "bg-gray-100 text-gray-600"
+                      }`}
+                    >
+                      {item.badge}
+                    </span>
+                  )}
+                </Link>
+              ))}
+            </div>
+
+            <div>
+              <div className="px-3 mb-2">
+                <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                  Utilities
+                </h3>
+              </div>
+              {utilityItems.map((item) => (
+                <Link
+                  key={item.label}
+                  href={item.href}
+                  className={`flex items-center px-3 py-2.5 rounded-lg transition-all duration-200 group ${
+                    activeMenu === item.label.toLowerCase()
+                      ? "bg-gray-100 text-gray-900"
+                      : "text-gray-600 hover:bg-gray-50"
+                  }`}
+                  onClick={() => setActiveMenu(item.label.toLowerCase())}
+                >
+                  <div
+                    className={`w-8 h-8 rounded-lg flex items-center justify-center mr-3 transition-colors ${
+                      activeMenu === item.label.toLowerCase()
+                        ? "bg-gray-200"
+                        : "bg-gray-100 group-hover:bg-gray-200"
+                    }`}
+                  >
+                    <Icon name={item.icon} className="w-5 h-5 text-gray-500" />
+                  </div>
                   <span className="font-medium">{item.label}</span>
-                </div>
-                {item.badge && (
-                  <span className="px-2 py-0.5 text-xs font-medium bg-blue-100 text-blue-600 rounded-full">
-                    {item.badge}
-                  </span>
-                )}
-              </Link>
-            ))}
+                </Link>
+              ))}
+            </div>
           </nav>
 
           {/* User Profile */}
           <div className="p-4 border-t bg-gray-50">
             <div className="flex items-center">
-              <div className="relative w-10 h-10 rounded-full overflow-hidden">
-                <Image
-                  src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=32"
-                  alt="Profile"
-                  fill
-                  className="object-cover"
-                />
+              <div className="relative">
+                <div className="w-10 h-10 rounded-lg overflow-hidden">
+                  <Image
+                    src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=32"
+                    alt="Profile"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
                 <div className="absolute bottom-0 right-0 w-3 h-3 bg-green-400 border-2 border-white rounded-full"></div>
               </div>
               <div className="ml-3 flex-1">

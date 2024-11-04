@@ -8,6 +8,7 @@ import Card from "../components/ui/Card";
 import Badge from "../components/ui/Badge";
 import { Icon } from "../utils/heroIcons";
 import SearchBar from "../components/admin/SearchBar";
+import MainLayout from "../layouts/MainLayout";
 
 export default function News() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -75,83 +76,144 @@ export default function News() {
   const regularNews = filteredNews.filter((item) => !item.featured);
 
   return (
-    <main>
-      {/* Hero Section */}
-      <section className="relative h-[40vh] flex items-center">
-        <Image
-          src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800"
-          alt="News & Updates"
-          fill
-          className="object-cover"
-        />
-        <div className="absolute inset-0 bg-blue-900/80" />
-        <div className="container mx-auto px-4 relative z-10">
-          <TextReveal>
-            <h1 className="text-5xl font-bold text-white mb-4">
-              News & Updates
-            </h1>
-          </TextReveal>
-          <p className="text-xl text-white/90 max-w-2xl">
-            Stay informed about our latest initiatives, events, and impact
-            stories.
-          </p>
-        </div>
-      </section>
+    <MainLayout>
+      <main>
+        {/* Hero Section */}
+        <section className="relative h-[40vh] flex items-center">
+          <Image
+            src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800"
+            alt="News & Updates"
+            fill
+            className="object-cover"
+          />
+          <div className="absolute inset-0 bg-blue-900/80" />
+          <div className="container mx-auto px-4 relative z-10">
+            <TextReveal>
+              <h1 className="text-5xl font-bold text-white mb-4">
+                News & Updates
+              </h1>
+            </TextReveal>
+            <p className="text-xl text-white/90 max-w-2xl">
+              Stay informed about our latest initiatives, events, and impact
+              stories.
+            </p>
+          </div>
+        </section>
 
-      {/* Search and Filter Section */}
-      <section className="py-8 bg-white border-b sticky top-0 z-20">
-        <div className="container mx-auto px-4">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <div className="w-full md:w-96">
-              <SearchBar
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search news..."
-              />
-            </div>
-            <div className="flex gap-2">
-              {categories.map((category) => (
-                <button
-                  key={category}
-                  onClick={() => setSelectedCategory(category)}
-                  className={`px-4 py-2 rounded-full text-sm transition-colors ${
-                    selectedCategory === category
-                      ? "bg-blue-600 text-white"
-                      : "bg-gray-100 text-gray-600 hover:bg-gray-200"
-                  }`}
-                >
-                  {category}
-                </button>
-              ))}
+        {/* Search and Filter Section */}
+        <section className="py-8 bg-white border-b sticky top-0 z-20">
+          <div className="container mx-auto px-4">
+            <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+              <div className="w-full md:w-96">
+                <SearchBar
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder="Search news..."
+                />
+              </div>
+              <div className="flex gap-2">
+                {categories.map((category) => (
+                  <button
+                    key={category}
+                    onClick={() => setSelectedCategory(category)}
+                    className={`px-4 py-2 rounded-full text-sm transition-colors ${
+                      selectedCategory === category
+                        ? "bg-blue-600 text-white"
+                        : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+                    }`}
+                  >
+                    {category}
+                  </button>
+                ))}
+              </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Featured News */}
-      {featuredNews.length > 0 && (
-        <section className="py-12">
+        {/* Featured News */}
+        {featuredNews.length > 0 && (
+          <section className="py-12">
+            <div className="container mx-auto px-4">
+              <SectionHeader
+                title="Featured Stories"
+                subtitle="Our most impactful recent news"
+                centered
+              />
+              <div className="grid md:grid-cols-2 gap-8 mt-12">
+                {featuredNews.map((news) => (
+                  <motion.div
+                    key={news.title}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                  >
+                    <Card className="h-full group cursor-pointer">
+                      <div className="relative h-64">
+                        <Image
+                          src={news.image}
+                          alt={news.title}
+                          fill
+                          className="object-cover transition-transform duration-500 group-hover:scale-105"
+                        />
+                        <div className="absolute top-4 right-4">
+                          <Badge variant="primary">{news.category}</Badge>
+                        </div>
+                      </div>
+                      <div className="p-6">
+                        <div className="flex items-center gap-4 text-sm text-gray-600 mb-3">
+                          <span className="flex items-center">
+                            <Icon name="calendar" className="w-4 h-4 mr-1" />
+                            {news.date}
+                          </span>
+                          <span className="flex items-center">
+                            <Icon name="clock" className="w-4 h-4 mr-1" />
+                            {news.readTime}
+                          </span>
+                        </div>
+                        <h3 className="text-xl font-bold mb-3 group-hover:text-blue-600 transition-colors">
+                          {news.title}
+                        </h3>
+                        <p className="text-gray-600 mb-4">{news.excerpt}</p>
+                        <div className="flex items-center justify-between">
+                          <span className="text-sm text-gray-500">
+                            By {news.author}
+                          </span>
+                          <span className="text-blue-600 group-hover:translate-x-2 transition-transform">
+                            Read More →
+                          </span>
+                        </div>
+                      </div>
+                    </Card>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
+
+        {/* Latest News Grid */}
+        <section className="py-12 bg-gray-50">
           <div className="container mx-auto px-4">
             <SectionHeader
-              title="Featured Stories"
-              subtitle="Our most impactful recent news"
+              title="Latest News"
+              subtitle="Stay up to date with our activities"
               centered
             />
-            <div className="grid md:grid-cols-2 gap-8 mt-12">
-              {featuredNews.map((news) => (
+            <div className="grid md:grid-cols-3 gap-8 mt-12">
+              {regularNews.map((news) => (
                 <motion.div
                   key={news.title}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                 >
-                  <Card className="h-full group cursor-pointer">
-                    <div className="relative h-64">
+                  <Card className="h-full group cursor-pointer hover:shadow-lg transition-shadow duration-300">
+                    <div className="relative h-48">
                       <Image
                         src={news.image}
                         alt={news.title}
                         fill
-                        className="object-cover transition-transform duration-500 group-hover:scale-105"
+                        className="object-cover"
                       />
                       <div className="absolute top-4 right-4">
                         <Badge variant="primary">{news.category}</Badge>
@@ -168,18 +230,15 @@ export default function News() {
                           {news.readTime}
                         </span>
                       </div>
-                      <h3 className="text-xl font-bold mb-3 group-hover:text-blue-600 transition-colors">
+                      <h3 className="text-lg font-bold mb-3 group-hover:text-blue-600 transition-colors">
                         {news.title}
                       </h3>
-                      <p className="text-gray-600 mb-4">{news.excerpt}</p>
-                      <div className="flex items-center justify-between">
-                        <span className="text-sm text-gray-500">
-                          By {news.author}
-                        </span>
-                        <span className="text-blue-600 group-hover:translate-x-2 transition-transform">
-                          Read More →
-                        </span>
-                      </div>
+                      <p className="text-gray-600 mb-4 line-clamp-2">
+                        {news.excerpt}
+                      </p>
+                      <span className="text-blue-600 group-hover:translate-x-2 transition-transform inline-block">
+                        Read More →
+                      </span>
                     </div>
                   </Card>
                 </motion.div>
@@ -187,105 +246,49 @@ export default function News() {
             </div>
           </div>
         </section>
-      )}
 
-      {/* Latest News Grid */}
-      <section className="py-12 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <SectionHeader
-            title="Latest News"
-            subtitle="Stay up to date with our activities"
-            centered
+        {/* Newsletter Section */}
+        <section className="py-20 bg-blue-600 relative overflow-hidden">
+          <motion.div
+            className="absolute inset-0 opacity-10"
+            animate={{
+              backgroundPosition: ["0% 0%", "100% 100%"],
+            }}
+            transition={{
+              duration: 20,
+              repeat: Infinity,
+              repeatType: "reverse",
+            }}
+            style={{
+              backgroundImage: "url('/patterns/circuit.svg')",
+              backgroundSize: "cover",
+            }}
           />
-          <div className="grid md:grid-cols-3 gap-8 mt-12">
-            {regularNews.map((news) => (
-              <motion.div
-                key={news.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-              >
-                <Card className="h-full group cursor-pointer hover:shadow-lg transition-shadow duration-300">
-                  <div className="relative h-48">
-                    <Image
-                      src={news.image}
-                      alt={news.title}
-                      fill
-                      className="object-cover"
-                    />
-                    <div className="absolute top-4 right-4">
-                      <Badge variant="primary">{news.category}</Badge>
-                    </div>
-                  </div>
-                  <div className="p-6">
-                    <div className="flex items-center gap-4 text-sm text-gray-600 mb-3">
-                      <span className="flex items-center">
-                        <Icon name="calendar" className="w-4 h-4 mr-1" />
-                        {news.date}
-                      </span>
-                      <span className="flex items-center">
-                        <Icon name="clock" className="w-4 h-4 mr-1" />
-                        {news.readTime}
-                      </span>
-                    </div>
-                    <h3 className="text-lg font-bold mb-3 group-hover:text-blue-600 transition-colors">
-                      {news.title}
-                    </h3>
-                    <p className="text-gray-600 mb-4 line-clamp-2">
-                      {news.excerpt}
-                    </p>
-                    <span className="text-blue-600 group-hover:translate-x-2 transition-transform inline-block">
-                      Read More →
-                    </span>
-                  </div>
-                </Card>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Newsletter Section */}
-      <section className="py-20 bg-blue-600 relative overflow-hidden">
-        <motion.div
-          className="absolute inset-0 opacity-10"
-          animate={{
-            backgroundPosition: ["0% 0%", "100% 100%"],
-          }}
-          transition={{
-            duration: 20,
-            repeat: Infinity,
-            repeatType: "reverse",
-          }}
-          style={{
-            backgroundImage: "url('/patterns/circuit.svg')",
-            backgroundSize: "cover",
-          }}
-        />
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="max-w-2xl mx-auto text-center">
-            <TextReveal>
-              <h2 className="text-3xl font-bold text-white mb-6">
-                Never Miss an Update
-              </h2>
-            </TextReveal>
-            <p className="text-white/90 mb-8">
-              Subscribe to our newsletter and stay informed about our latest
-              news, events, and impact stories.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
-              <input
-                type="email"
-                placeholder="Enter your email"
-                className="flex-1 px-4 py-3 rounded-lg focus:ring-2 focus:ring-white"
-              />
-              <button className="px-8 py-3 bg-white text-blue-600 rounded-lg hover:bg-blue-50 transition-colors">
-                Subscribe
-              </button>
+          <div className="container mx-auto px-4 relative z-10">
+            <div className="max-w-2xl mx-auto text-center">
+              <TextReveal>
+                <h2 className="text-3xl font-bold text-white mb-6">
+                  Never Miss an Update
+                </h2>
+              </TextReveal>
+              <p className="text-white/90 mb-8">
+                Subscribe to our newsletter and stay informed about our latest
+                news, events, and impact stories.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
+                <input
+                  type="email"
+                  placeholder="Enter your email"
+                  className="flex-1 px-4 py-3 rounded-lg focus:ring-2 focus:ring-white"
+                />
+                <button className="px-8 py-3 bg-white text-blue-600 rounded-lg hover:bg-blue-50 transition-colors">
+                  Subscribe
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-      </section>
-    </main>
+        </section>
+      </main>
+    </MainLayout>
   );
 }

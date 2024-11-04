@@ -9,6 +9,7 @@ import Badge from "../components/ui/Badge";
 import Button from "../components/ui/Button";
 import { Icon } from "../utils/heroIcons";
 import SearchBar from "../components/admin/SearchBar";
+import MainLayout from "../layouts/MainLayout";
 
 export default function Bulletins() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -98,130 +99,192 @@ export default function Bulletins() {
   );
 
   return (
-    <main>
-      {/* Hero Section */}
-      <section className="relative h-[40vh] flex items-center">
-        <Image
-          src="https://images.unsplash.com/photo-1506784983877-45594efa4cbe?w=800"
-          alt="Bulletins & Documents"
-          fill
-          className="object-cover"
-        />
-        <div className="absolute inset-0 bg-blue-900/80" />
-        <div className="container mx-auto px-4 relative z-10">
-          <TextReveal>
-            <h1 className="text-5xl font-bold text-white mb-4">
-              Bulletins & Documents
-            </h1>
-          </TextReveal>
-          <p className="text-xl text-white/90 max-w-2xl">
-            Access our monthly bulletins, meeting minutes, and important club
-            documents.
-          </p>
-        </div>
-      </section>
+    <MainLayout>
+      <main>
+        {/* Hero Section */}
+        <section className="relative h-[40vh] flex items-center">
+          <Image
+            src="https://images.unsplash.com/photo-1506784983877-45594efa4cbe?w=800"
+            alt="Bulletins & Documents"
+            fill
+            className="object-cover"
+          />
+          <div className="absolute inset-0 bg-blue-900/80" />
+          <div className="container mx-auto px-4 relative z-10">
+            <TextReveal>
+              <h1 className="text-5xl font-bold text-white mb-4">
+                Bulletins & Documents
+              </h1>
+            </TextReveal>
+            <p className="text-xl text-white/90 max-w-2xl">
+              Access our monthly bulletins, meeting minutes, and important club
+              documents.
+            </p>
+          </div>
+        </section>
 
-      {/* Search and Filter Section */}
-      <section className="py-8 bg-white border-b sticky top-0 z-20">
-        <div className="container mx-auto px-4">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <div className="w-full md:w-96">
-              <SearchBar
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search bulletins..."
-              />
-            </div>
-            <div className="flex flex-wrap gap-2">
-              <select
-                value={selectedYear}
-                onChange={(e) => setSelectedYear(e.target.value)}
-                className="px-4 py-2 rounded-lg border border-gray-200 text-sm"
-              >
-                {years.map((year) => (
-                  <option key={year} value={year}>
-                    {year}
-                  </option>
-                ))}
-              </select>
-              <div className="flex gap-2">
-                {types.map((type) => (
-                  <button
-                    key={type}
-                    onClick={() => setSelectedType(type)}
-                    className={`px-4 py-2 rounded-full text-sm transition-colors ${
-                      selectedType === type
-                        ? "bg-blue-600 text-white"
-                        : "bg-gray-100 text-gray-600 hover:bg-gray-200"
-                    }`}
-                  >
-                    {type}
-                  </button>
-                ))}
+        {/* Search and Filter Section */}
+        <section className="py-8 bg-white border-b sticky top-0 z-20">
+          <div className="container mx-auto px-4">
+            <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+              <div className="w-full md:w-96">
+                <SearchBar
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder="Search bulletins..."
+                />
+              </div>
+              <div className="flex flex-wrap gap-2">
+                <select
+                  value={selectedYear}
+                  onChange={(e) => setSelectedYear(e.target.value)}
+                  className="px-4 py-2 rounded-lg border border-gray-200 text-sm"
+                >
+                  {years.map((year) => (
+                    <option key={year} value={year}>
+                      {year}
+                    </option>
+                  ))}
+                </select>
+                <div className="flex gap-2">
+                  {types.map((type) => (
+                    <button
+                      key={type}
+                      onClick={() => setSelectedType(type)}
+                      className={`px-4 py-2 rounded-full text-sm transition-colors ${
+                        selectedType === type
+                          ? "bg-blue-600 text-white"
+                          : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+                      }`}
+                    >
+                      {type}
+                    </button>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Featured Documents */}
-      {featuredBulletins.length > 0 && (
-        <section className="py-12">
+        {/* Featured Documents */}
+        {featuredBulletins.length > 0 && (
+          <section className="py-12">
+            <div className="container mx-auto px-4">
+              <SectionHeader
+                title="Featured Documents"
+                subtitle="Important publications and announcements"
+                centered
+              />
+              <div className="grid md:grid-cols-2 gap-8 mt-12">
+                {featuredBulletins.map((bulletin) => (
+                  <motion.div
+                    key={bulletin.title}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                  >
+                    <Card className="h-full group">
+                      <div className="grid md:grid-cols-2">
+                        <div className="relative h-full min-h-[200px]">
+                          <Image
+                            src={bulletin.thumbnail}
+                            alt={bulletin.title}
+                            fill
+                            className="object-cover"
+                          />
+                          <Badge
+                            variant="primary"
+                            className="absolute top-4 right-4"
+                          >
+                            {bulletin.type}
+                          </Badge>
+                        </div>
+                        <div className="p-6">
+                          <h3 className="text-xl font-bold mb-3">
+                            {bulletin.title}
+                          </h3>
+                          <p className="text-gray-600 mb-4">
+                            {bulletin.description}
+                          </p>
+                          <div className="space-y-2 text-sm text-gray-600 mb-4">
+                            <div className="flex items-center">
+                              <Icon name="calendar" className="w-4 h-4 mr-2" />
+                              {new Date(bulletin.date).toLocaleDateString()}
+                            </div>
+                            <div className="flex items-center">
+                              <Icon name="document" className="w-4 h-4 mr-2" />
+                              {bulletin.format} ({bulletin.fileSize})
+                            </div>
+                          </div>
+                          <Button
+                            variant="primary"
+                            className="w-full"
+                            href={bulletin.downloadUrl}
+                          >
+                            Download
+                          </Button>
+                        </div>
+                      </div>
+                    </Card>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
+
+        {/* Document Archive */}
+        <section className="py-12 bg-gray-50">
           <div className="container mx-auto px-4">
             <SectionHeader
-              title="Featured Documents"
-              subtitle="Important publications and announcements"
+              title="Document Archive"
+              subtitle="Access our previous bulletins and documents"
               centered
             />
-            <div className="grid md:grid-cols-2 gap-8 mt-12">
-              {featuredBulletins.map((bulletin) => (
+            <div className="grid md:grid-cols-3 gap-8 mt-12">
+              {regularBulletins.map((bulletin) => (
                 <motion.div
                   key={bulletin.title}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                 >
-                  <Card className="h-full group">
-                    <div className="grid md:grid-cols-2">
-                      <div className="relative h-full min-h-[200px]">
-                        <Image
-                          src={bulletin.thumbnail}
-                          alt={bulletin.title}
-                          fill
-                          className="object-cover"
-                        />
-                        <Badge
-                          variant="primary"
-                          className="absolute top-4 right-4"
-                        >
-                          {bulletin.type}
-                        </Badge>
+                  <Card className="h-full group hover:shadow-lg transition-shadow duration-300">
+                    <div className="relative h-48">
+                      <Image
+                        src={bulletin.thumbnail}
+                        alt={bulletin.title}
+                        fill
+                        className="object-cover"
+                      />
+                      <div className="absolute top-4 right-4">
+                        <Badge variant="primary">{bulletin.type}</Badge>
                       </div>
-                      <div className="p-6">
-                        <h3 className="text-xl font-bold mb-3">
-                          {bulletin.title}
-                        </h3>
-                        <p className="text-gray-600 mb-4">
-                          {bulletin.description}
-                        </p>
-                        <div className="space-y-2 text-sm text-gray-600 mb-4">
-                          <div className="flex items-center">
-                            <Icon name="calendar" className="w-4 h-4 mr-2" />
-                            {new Date(bulletin.date).toLocaleDateString()}
-                          </div>
-                          <div className="flex items-center">
-                            <Icon name="document" className="w-4 h-4 mr-2" />
-                            {bulletin.format} ({bulletin.fileSize})
-                          </div>
-                        </div>
-                        <Button
-                          variant="primary"
-                          className="w-full"
-                          href={bulletin.downloadUrl}
-                        >
-                          Download
-                        </Button>
+                    </div>
+                    <div className="p-6">
+                      <h3 className="text-lg font-bold mb-2">
+                        {bulletin.title}
+                      </h3>
+                      <p className="text-gray-600 mb-4 line-clamp-2">
+                        {bulletin.description}
+                      </p>
+                      <div className="flex items-center justify-between text-sm text-gray-600 mb-4">
+                        <span className="flex items-center">
+                          <Icon name="calendar" className="w-4 h-4 mr-1" />
+                          {new Date(bulletin.date).toLocaleDateString()}
+                        </span>
+                        <span className="flex items-center">
+                          <Icon name="document" className="w-4 h-4 mr-1" />
+                          {bulletin.format} ({bulletin.fileSize})
+                        </span>
                       </div>
+                      <Button
+                        variant="ghost"
+                        className="w-full group-hover:bg-blue-50"
+                        href={bulletin.downloadUrl}
+                      >
+                        Download
+                      </Button>
                     </div>
                   </Card>
                 </motion.div>
@@ -229,107 +292,49 @@ export default function Bulletins() {
             </div>
           </div>
         </section>
-      )}
 
-      {/* Document Archive */}
-      <section className="py-12 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <SectionHeader
-            title="Document Archive"
-            subtitle="Access our previous bulletins and documents"
-            centered
+        {/* Subscribe Section */}
+        <section className="py-20 bg-blue-600 relative overflow-hidden">
+          <motion.div
+            className="absolute inset-0 opacity-10"
+            animate={{
+              backgroundPosition: ["0% 0%", "100% 100%"],
+            }}
+            transition={{
+              duration: 20,
+              repeat: Infinity,
+              repeatType: "reverse",
+            }}
+            style={{
+              backgroundImage: "url('/patterns/circuit.svg')",
+              backgroundSize: "cover",
+            }}
           />
-          <div className="grid md:grid-cols-3 gap-8 mt-12">
-            {regularBulletins.map((bulletin) => (
-              <motion.div
-                key={bulletin.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-              >
-                <Card className="h-full group hover:shadow-lg transition-shadow duration-300">
-                  <div className="relative h-48">
-                    <Image
-                      src={bulletin.thumbnail}
-                      alt={bulletin.title}
-                      fill
-                      className="object-cover"
-                    />
-                    <div className="absolute top-4 right-4">
-                      <Badge variant="primary">{bulletin.type}</Badge>
-                    </div>
-                  </div>
-                  <div className="p-6">
-                    <h3 className="text-lg font-bold mb-2">{bulletin.title}</h3>
-                    <p className="text-gray-600 mb-4 line-clamp-2">
-                      {bulletin.description}
-                    </p>
-                    <div className="flex items-center justify-between text-sm text-gray-600 mb-4">
-                      <span className="flex items-center">
-                        <Icon name="calendar" className="w-4 h-4 mr-1" />
-                        {new Date(bulletin.date).toLocaleDateString()}
-                      </span>
-                      <span className="flex items-center">
-                        <Icon name="document" className="w-4 h-4 mr-1" />
-                        {bulletin.format} ({bulletin.fileSize})
-                      </span>
-                    </div>
-                    <Button
-                      variant="ghost"
-                      className="w-full group-hover:bg-blue-50"
-                      href={bulletin.downloadUrl}
-                    >
-                      Download
-                    </Button>
-                  </div>
-                </Card>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Subscribe Section */}
-      <section className="py-20 bg-blue-600 relative overflow-hidden">
-        <motion.div
-          className="absolute inset-0 opacity-10"
-          animate={{
-            backgroundPosition: ["0% 0%", "100% 100%"],
-          }}
-          transition={{
-            duration: 20,
-            repeat: Infinity,
-            repeatType: "reverse",
-          }}
-          style={{
-            backgroundImage: "url('/patterns/circuit.svg')",
-            backgroundSize: "cover",
-          }}
-        />
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="max-w-2xl mx-auto text-center">
-            <TextReveal>
-              <h2 className="text-3xl font-bold text-white mb-6">
-                Get Bulletins Delivered
-              </h2>
-            </TextReveal>
-            <p className="text-white/90 mb-8">
-              Subscribe to receive our monthly bulletins directly in your inbox.
-              Stay informed about club activities and announcements.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
-              <input
-                type="email"
-                placeholder="Enter your email"
-                className="flex-1 px-4 py-3 rounded-lg focus:ring-2 focus:ring-white"
-              />
-              <Button variant="secondary" size="lg">
-                Subscribe
-              </Button>
+          <div className="container mx-auto px-4 relative z-10">
+            <div className="max-w-2xl mx-auto text-center">
+              <TextReveal>
+                <h2 className="text-3xl font-bold text-white mb-6">
+                  Get Bulletins Delivered
+                </h2>
+              </TextReveal>
+              <p className="text-white/90 mb-8">
+                Subscribe to receive our monthly bulletins directly in your
+                inbox. Stay informed about club activities and announcements.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
+                <input
+                  type="email"
+                  placeholder="Enter your email"
+                  className="flex-1 px-4 py-3 rounded-lg focus:ring-2 focus:ring-white"
+                />
+                <Button variant="secondary" size="lg">
+                  Subscribe
+                </Button>
+              </div>
             </div>
           </div>
-        </div>
-      </section>
-    </main>
+        </section>
+      </main>
+    </MainLayout>
   );
 }
