@@ -1,5 +1,12 @@
 "use client";
 import { useState } from "react";
+import DashboardHeader from "@/app/components/admin/DashboardHeader";
+import Card from "@/app/components/ui/Card";
+import Button from "@/app/components/ui/Button";
+import FileUploader from "@/app/components/admin/FileUploader";
+import Pagination from "@/app/components/admin/Pagination";
+import SearchBar from "@/app/components/admin/SearchBar";
+import Modal from "@/app/components/Modal";
 
 export default function AdminBulletins() {
   const [bulletins, setBulletins] = useState([

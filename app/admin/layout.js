@@ -3,15 +3,16 @@ import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
+import { Icon } from "@/app/utils/icons";
 
 const menuItems = [
-  { icon: "📊", label: "Dashboard", href: "/admin" },
-  { icon: "📰", label: "News", href: "/admin/news" },
-  { icon: "📅", label: "Events", href: "/admin/events" },
-  { icon: "📑", label: "Bulletins", href: "/admin/bulletins" },
-  { icon: "💰", label: "Donations", href: "/admin/donations" },
-  { icon: "🤝", label: "Sponsors", href: "/admin/sponsors" },
-  { icon: "👥", label: "Members", href: "/admin/members" },
+  { icon: "home", label: "Dashboard", href: "/admin" },
+  { icon: "news", label: "News", href: "/admin/news" },
+  { icon: "calendar", label: "Events", href: "/admin/events" },
+  { icon: "document", label: "Bulletins", href: "/admin/bulletins" },
+  { icon: "donation", label: "Donations", href: "/admin/donations" },
+  { icon: "building", label: "Sponsors", href: "/admin/sponsors" },
+  { icon: "users", label: "Members", href: "/admin/members" },
 ];
 
 export default function AdminLayout({ children }) {
@@ -30,35 +31,32 @@ export default function AdminLayout({ children }) {
                 className="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
               >
                 <span className="sr-only">Toggle sidebar</span>
-                <svg
+                <Icon
+                  name={isSidebarCollapsed ? "menu" : "close"}
                   className="w-6 h-6"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
-                    clipRule="evenodd"
-                  />
-                </svg>
+                />
               </button>
               <div className="ml-4">
                 <span className="text-xl font-semibold">Admin Dashboard</span>
               </div>
             </div>
-            <div className="flex items-center">
-              <div className="flex items-center ml-3">
-                <div className="relative">
-                  <button className="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300">
-                    <Image
-                      className="w-8 h-8 rounded-full"
-                      src="/admin-avatar.jpg"
-                      alt="Admin avatar"
-                      width={32}
-                      height={32}
-                    />
-                  </button>
-                </div>
+            <div className="flex items-center gap-4">
+              <button className="text-gray-500 hover:text-gray-700">
+                <Icon name="notification" className="w-6 h-6" />
+              </button>
+              <button className="text-gray-500 hover:text-gray-700">
+                <Icon name="settings" className="w-6 h-6" />
+              </button>
+              <div className="relative">
+                <button className="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300">
+                  <Image
+                    className="w-8 h-8 rounded-full"
+                    src="/admin-avatar.jpg"
+                    alt="Admin avatar"
+                    width={32}
+                    height={32}
+                  />
+                </button>
               </div>
             </div>
           </div>
@@ -83,7 +81,14 @@ export default function AdminLayout({ children }) {
                       isActive ? "bg-blue-50 text-blue-600" : "text-gray-700"
                     }`}
                   >
-                    <span className="text-2xl mr-3">{item.icon}</span>
+                    <Icon
+                      name={item.icon}
+                      className={`w-6 h-6 mr-3 ${
+                        isActive
+                          ? "text-blue-600"
+                          : "text-gray-500 group-hover:text-gray-900"
+                      }`}
+                    />
                     <span>{item.label}</span>
                   </Link>
                 </li>
