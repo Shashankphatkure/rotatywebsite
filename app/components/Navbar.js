@@ -54,7 +54,7 @@ export default function Navbar() {
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2">
             <Image
-              src="https://upload.wikimedia.org/wikipedia/commons/4/42/Rotary_International_Logo.svg"
+              src="/logo.png"
               alt="Logo"
               width={40}
               height={40}
