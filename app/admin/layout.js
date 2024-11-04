@@ -3,7 +3,7 @@ import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { Icon } from "@/app/utils/icons";
+import { Icon } from "@/app/utils/heroIcons";
 
 const menuItems = [
   { icon: "home", label: "Dashboard", href: "/admin" },
