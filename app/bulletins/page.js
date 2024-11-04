@@ -1,6 +1,8 @@
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import Image from "next/image";
+import Card from "../components/ui/Card";
+import Button from "../components/ui/Button";
 
 export default function BulletinsPage() {
   const bulletins = [
@@ -11,27 +13,32 @@ export default function BulletinsPage() {
       thumbnail: "/bulletins/march-2024.jpg",
       description: "Monthly update on our projects and achievements",
       fileSize: "2.4 MB",
+      downloads: 156,
     },
-    {
-      id: 2,
-      title: "February 2024 Newsletter",
-      date: "February 1, 2024",
-      thumbnail: "/bulletins/feb-2024.jpg",
-      description: "Coverage of our community outreach programs",
-      fileSize: "2.1 MB",
-    },
-    // Add more bulletins
+    // Add more bulletins...
   ];
 
   return (
     <>
       <Navbar />
-      <main className="min-h-screen pt-20">
+      <main className="min-h-screen">
         {/* Hero Section */}
-        <section className="bg-blue-600 text-white py-16">
-          <div className="container mx-auto px-4">
-            <h1 className="text-4xl md:text-6xl font-bold mb-6">Bulletins</h1>
-            <p className="text-xl">
+        <section className="relative h-[40vh] flex items-center">
+          <div className="absolute inset-0 z-0">
+            <Image
+              src="/bulletins/hero-bg.jpg"
+              alt="Bulletins Hero"
+              fill
+              className="object-cover"
+              priority
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-blue-900/90 to-blue-600/80" />
+          </div>
+          <div className="container mx-auto px-4 relative z-10">
+            <h1 className="text-4xl md:text-6xl font-bold text-white mb-4">
+              Bulletins
+            </h1>
+            <p className="text-xl text-white/90">
               Stay informed with our monthly newsletters and updates
             </p>
           </div>
@@ -40,37 +47,39 @@ export default function BulletinsPage() {
         {/* Bulletins Grid */}
         <section className="py-16">
           <div className="container mx-auto px-4">
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               {bulletins.map((bulletin) => (
-                <div
-                  key={bulletin.id}
-                  className="bg-white rounded-lg shadow-md overflow-hidden"
-                >
-                  <div className="relative h-48">
+                <Card key={bulletin.id} className="group">
+                  <div className="relative h-48 overflow-hidden">
                     <Image
                       src={bulletin.thumbnail}
                       alt={bulletin.title}
                       fill
-                      className="object-cover"
+                      className="object-cover group-hover:scale-105 transition-transform duration-300"
                     />
                   </div>
                   <div className="p-6">
-                    <h3 className="text-xl font-bold mb-2">{bulletin.title}</h3>
+                    <h2 className="text-xl font-bold mb-2 group-hover:text-blue-600 transition-colors">
+                      {bulletin.title}
+                    </h2>
                     <p className="text-gray-600 mb-4">{bulletin.description}</p>
-                    <div className="flex justify-between items-center text-sm text-gray-500">
+                    <div className="flex justify-between items-center text-sm text-gray-500 mb-6">
                       <span>{bulletin.date}</span>
-                      <span>{bulletin.fileSize}</span>
+                      <div className="flex items-center space-x-4">
+                        <span>📥 {bulletin.downloads}</span>
+                        <span>{bulletin.fileSize}</span>
+                      </div>
                     </div>
-                    <div className="mt-4 flex space-x-4">
-                      <button className="flex-1 bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition-colors">
+                    <div className="flex gap-4">
+                      <Button variant="primary" className="flex-1">
                         Download PDF
-                      </button>
-                      <button className="flex-1 border border-blue-600 text-blue-600 py-2 rounded-lg hover:bg-blue-50 transition-colors">
+                      </Button>
+                      <Button variant="outline" className="flex-1">
                         Read Online
-                      </button>
+                      </Button>
                     </div>
                   </div>
-                </div>
+                </Card>
               ))}
             </div>
           </div>

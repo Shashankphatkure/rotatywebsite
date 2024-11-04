@@ -1,6 +1,8 @@
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import Image from "next/image";
+import Card from "../components/ui/Card";
+import Badge from "../components/ui/Badge";
 
 export default function NewsPage() {
   const newsArticles = [
@@ -12,110 +14,92 @@ export default function NewsPage() {
       excerpt:
         "Our annual charity gala exceeded expectations, raising over ₱1 million for local community projects.",
       category: "Events",
+      author: "John Smith",
+      readTime: "5 min read",
     },
-    {
-      id: 2,
-      title: "New Community Center Opens",
-      date: "March 10, 2024",
-      image: "/news/community-center.jpg",
-      excerpt:
-        "The newly constructed community center will serve as a hub for educational programs and community gatherings.",
-      category: "Projects",
-    },
-    // Add more news articles here
+    // Add more news articles...
   ];
+
+  const categories = ["All", "Events", "Projects", "Community", "Updates"];
 
   return (
     <>
       <Navbar />
-      <main className="min-h-screen pt-20">
+      <main className="min-h-screen">
         {/* Hero Section */}
-        <section className="bg-blue-600 text-white py-16">
-          <div className="container mx-auto px-4">
-            <h1 className="text-4xl md:text-6xl font-bold mb-6">Latest News</h1>
-            <p className="text-xl">
+        <section className="relative h-[40vh] flex items-center">
+          <div className="absolute inset-0 z-0">
+            <Image
+              src="/news/hero-bg.jpg"
+              alt="News Hero"
+              fill
+              className="object-cover"
+              priority
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-blue-900/90 to-blue-600/80" />
+          </div>
+          <div className="container mx-auto px-4 relative z-10">
+            <h1 className="text-4xl md:text-6xl font-bold text-white mb-4">
+              Latest News
+            </h1>
+            <p className="text-xl text-white/90">
               Stay updated with our recent activities and announcements
             </p>
+          </div>
+        </section>
+
+        {/* Categories */}
+        <section className="py-8 bg-gray-50">
+          <div className="container mx-auto px-4">
+            <div className="flex flex-wrap gap-4">
+              {categories.map((category) => (
+                <button
+                  key={category}
+                  className={`px-6 py-2 rounded-full transition-colors ${
+                    category === "All"
+                      ? "bg-blue-600 text-white"
+                      : "bg-white text-gray-600 hover:bg-gray-100"
+                  }`}
+                >
+                  {category}
+                </button>
+              ))}
+            </div>
           </div>
         </section>
 
         {/* News Grid */}
         <section className="py-16">
           <div className="container mx-auto px-4">
-            {/* Categories Filter */}
-            <div className="mb-8 flex flex-wrap gap-4">
-              <button className="px-4 py-2 rounded-full bg-blue-600 text-white">
-                All
-              </button>
-              <button className="px-4 py-2 rounded-full bg-gray-200 hover:bg-gray-300">
-                Events
-              </button>
-              <button className="px-4 py-2 rounded-full bg-gray-200 hover:bg-gray-300">
-                Projects
-              </button>
-              <button className="px-4 py-2 rounded-full bg-gray-200 hover:bg-gray-300">
-                Updates
-              </button>
-            </div>
-
-            {/* News Articles */}
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               {newsArticles.map((article) => (
-                <article
-                  key={article.id}
-                  className="bg-white rounded-lg shadow-md overflow-hidden"
-                >
-                  <div className="relative h-48">
+                <Card key={article.id} className="group">
+                  <div className="relative h-48 overflow-hidden">
                     <Image
                       src={article.image}
                       alt={article.title}
                       fill
-                      className="object-cover"
+                      className="object-cover group-hover:scale-105 transition-transform duration-300"
                     />
                   </div>
                   <div className="p-6">
                     <div className="flex justify-between items-center mb-4">
-                      <span className="text-sm text-blue-600">
-                        {article.category}
-                      </span>
+                      <Badge variant="primary">{article.category}</Badge>
                       <span className="text-sm text-gray-500">
                         {article.date}
                       </span>
                     </div>
-                    <h2 className="text-xl font-bold mb-2 text-gray-800">
+                    <h2 className="text-xl font-bold mb-2 group-hover:text-blue-600 transition-colors">
                       {article.title}
                     </h2>
                     <p className="text-gray-600 mb-4">{article.excerpt}</p>
-                    <a
-                      href={`/news/${article.id}`}
-                      className="text-blue-600 hover:text-blue-800"
-                    >
-                      Read More →
-                    </a>
+                    <div className="flex justify-between items-center text-sm text-gray-500">
+                      <span>{article.author}</span>
+                      <span>{article.readTime}</span>
+                    </div>
                   </div>
-                </article>
+                </Card>
               ))}
-            </div>
-
-            {/* Pagination */}
-            <div className="mt-12 flex justify-center">
-              <div className="flex space-x-2">
-                <button className="px-4 py-2 rounded-lg bg-gray-200 hover:bg-gray-300">
-                  Previous
-                </button>
-                <button className="px-4 py-2 rounded-lg bg-blue-600 text-white">
-                  1
-                </button>
-                <button className="px-4 py-2 rounded-lg bg-gray-200 hover:bg-gray-300">
-                  2
-                </button>
-                <button className="px-4 py-2 rounded-lg bg-gray-200 hover:bg-gray-300">
-                  3
-                </button>
-                <button className="px-4 py-2 rounded-lg bg-gray-200 hover:bg-gray-300">
-                  Next
-                </button>
-              </div>
             </div>
           </div>
         </section>
