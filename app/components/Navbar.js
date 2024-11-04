@@ -1,18 +1,37 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import Button from "./ui/Button";
 
 export default function Navbar() {
+  const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 0);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
-    <nav className="bg-white shadow-md fixed w-full z-50">
+    <nav
+      className={`
+        fixed w-full z-50 transition-all duration-300
+        ${
+          isScrolled
+            ? "bg-white/80 backdrop-blur-md shadow-sm"
+            : "bg-transparent"
+        }
+      `}
+    >
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center h-20">
           {/* Logo */}
-          <Link href="/" className="flex items-center">
-            <div className="relative w-12 h-12">
+          <Link href="/" className="flex items-center space-x-3">
+            <div className="relative w-10 h-10">
               <Image
                 src="/rotary-logo.png"
                 alt="Rotary Logo"
@@ -21,43 +40,32 @@ export default function Navbar() {
                 priority
               />
             </div>
-            <span className="ml-3 text-xl font-bold text-blue-600">
-              Rotary Organization
+            <span
+              className={`text-xl font-bold ${
+                isScrolled ? "text-gray-900" : "text-white"
+              }`}
+            >
+              Rotary
             </span>
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex space-x-8">
-            <Link
-              href="/about"
-              className="text-gray-600 hover:text-blue-600 transition-colors"
-            >
+          <div className="hidden md:flex items-center space-x-8">
+            <NavLink href="/about" isScrolled={isScrolled}>
               About Us
-            </Link>
-            <Link
-              href="/news"
-              className="text-gray-600 hover:text-blue-600 transition-colors"
-            >
+            </NavLink>
+            <NavLink href="/news" isScrolled={isScrolled}>
               News
-            </Link>
-            <Link
-              href="/events"
-              className="text-gray-600 hover:text-blue-600 transition-colors"
-            >
+            </NavLink>
+            <NavLink href="/events" isScrolled={isScrolled}>
               Events
-            </Link>
-            <Link
-              href="/bulletins"
-              className="text-gray-600 hover:text-blue-600 transition-colors"
-            >
+            </NavLink>
+            <NavLink href="/bulletins" isScrolled={isScrolled}>
               Bulletins
-            </Link>
-            <Link
-              href="/donate"
-              className="bg-yellow-400 text-blue-900 px-4 py-2 rounded-lg font-semibold hover:bg-yellow-300 transition-colors"
-            >
-              Donate
-            </Link>
+            </NavLink>
+            <Button variant="primary" size="md">
+              Donate Now
+            </Button>
           </div>
 
           {/* Mobile Menu Button */}
@@ -66,7 +74,9 @@ export default function Navbar() {
             onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
             <svg
-              className="w-6 h-6"
+              className={`w-6 h-6 ${
+                isScrolled ? "text-gray-900" : "text-white"
+              }`}
               fill="none"
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -85,40 +95,48 @@ export default function Navbar() {
 
         {/* Mobile Menu */}
         {isMenuOpen && (
-          <div className="md:hidden pb-4">
-            <Link
-              href="/about"
-              className="block py-2 text-gray-600 hover:text-blue-600"
-            >
+          <div className="md:hidden py-4 bg-white rounded-lg shadow-lg mt-2">
+            <NavLink href="/about" mobile>
               About Us
-            </Link>
-            <Link
-              href="/news"
-              className="block py-2 text-gray-600 hover:text-blue-600"
-            >
+            </NavLink>
+            <NavLink href="/news" mobile>
               News
-            </Link>
-            <Link
-              href="/events"
-              className="block py-2 text-gray-600 hover:text-blue-600"
-            >
+            </NavLink>
+            <NavLink href="/events" mobile>
               Events
-            </Link>
-            <Link
-              href="/bulletins"
-              className="block py-2 text-gray-600 hover:text-blue-600"
-            >
+            </NavLink>
+            <NavLink href="/bulletins" mobile>
               Bulletins
-            </Link>
-            <Link
-              href="/donate"
-              className="block py-2 text-blue-600 font-semibold"
-            >
-              Donate
-            </Link>
+            </NavLink>
+            <div className="px-4 pt-4">
+              <Button variant="primary" size="md" className="w-full">
+                Donate Now
+              </Button>
+            </div>
           </div>
         )}
       </div>
     </nav>
+  );
+}
+
+function NavLink({ href, children, isScrolled, mobile }) {
+  return (
+    <Link
+      href={href}
+      className={`
+        ${
+          mobile
+            ? "block px-4 py-2 text-gray-800 hover:bg-gray-50"
+            : `font-medium transition-colors duration-200 ${
+                isScrolled
+                  ? "text-gray-700 hover:text-primary-600"
+                  : "text-white/90 hover:text-white"
+              }`
+        }
+      `}
+    >
+      {children}
+    </Link>
   );
 }

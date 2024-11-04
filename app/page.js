@@ -1,95 +1,181 @@
 import Link from "next/link";
+import Image from "next/image";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import Button from "./components/ui/Button";
+import Card from "./components/ui/Card";
 
 export default function Home() {
   return (
     <>
       <Navbar />
-      <main className="min-h-screen pt-20">
+      <main className="min-h-screen">
         {/* Hero Section */}
-        <section className="bg-blue-600 text-white py-16">
-          <div className="container mx-auto px-4">
-            <h1 className="text-4xl md:text-6xl font-bold mb-6">
-              Welcome to Rotary Organization
-            </h1>
-            <p className="text-xl mb-8">
-              Making a difference in our community through service and
-              leadership
-            </p>
-            <div className="flex flex-wrap gap-4">
-              <Link
-                href="/donate"
-                className="bg-yellow-400 text-blue-900 px-6 py-3 rounded-lg font-semibold hover:bg-yellow-300 transition-colors"
-              >
-                Donate Now
-              </Link>
-              <Link
-                href="/sponsor"
-                className="bg-orange-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-orange-400 transition-colors"
-              >
-                Become a Sponsor
-              </Link>
+        <section className="relative h-screen flex items-center">
+          {/* Background Image with Overlay */}
+          <div className="absolute inset-0 z-0">
+            <Image
+              src="/hero-bg.jpg"
+              alt="Hero Background"
+              fill
+              className="object-cover"
+              priority
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-blue-900/90 to-blue-600/80" />
+          </div>
+
+          {/* Content */}
+          <div className="container mx-auto px-4 relative z-10">
+            <div className="max-w-3xl">
+              <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight">
+                Making a Difference Through Service
+              </h1>
+              <p className="text-xl md:text-2xl text-white/90 mb-8 leading-relaxed">
+                Join us in creating lasting change across the globe, in our
+                communities, and in ourselves.
+              </p>
+              <div className="flex flex-wrap gap-4">
+                <Button variant="primary" size="lg">
+                  Donate Now
+                </Button>
+                <Button
+                  variant="outline"
+                  size="lg"
+                  className="text-white border-white hover:bg-white/10"
+                >
+                  Become a Member
+                </Button>
+              </div>
             </div>
           </div>
         </section>
 
-        {/* Featured Section */}
-        <section className="py-12 bg-gray-50">
+        {/* Impact Stats Section */}
+        <section className="py-20 bg-gray-50">
           <div className="container mx-auto px-4">
-            <h2 className="text-3xl font-bold mb-8 text-gray-800">
-              Featured Updates
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+              {[
+                { number: "1M+", label: "Lives Impacted" },
+                { number: "150+", label: "Active Projects" },
+                { number: "50+", label: "Countries Reached" },
+                { number: "10K+", label: "Volunteers" },
+              ].map((stat) => (
+                <Card
+                  key={stat.label}
+                  className="p-6 text-center hover:scale-105 transition-transform"
+                >
+                  <div className="text-4xl font-bold text-blue-600 mb-2">
+                    {stat.number}
+                  </div>
+                  <div className="text-gray-600">{stat.label}</div>
+                </Card>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Featured Programs */}
+        <section className="py-20">
+          <div className="container mx-auto px-4">
+            <h2 className="text-3xl font-bold text-center mb-12">
+              Our Programs
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {/* News Card */}
-              <div className="bg-white rounded-lg shadow-md overflow-hidden">
-                <div className="p-6">
-                  <h3 className="text-xl font-semibold mb-2">Latest News</h3>
-                  <p className="text-gray-600 mb-4">
-                    Stay updated with our recent activities and announcements
-                  </p>
-                  <Link
-                    href="/news"
-                    className="text-blue-600 hover:text-blue-800"
-                  >
-                    Read More →
-                  </Link>
-                </div>
-              </div>
+            <div className="grid md:grid-cols-3 gap-8">
+              {[
+                {
+                  title: "Community Development",
+                  description:
+                    "Building stronger communities through sustainable projects",
+                  icon: "🏘️",
+                },
+                {
+                  title: "Youth Leadership",
+                  description: "Empowering the next generation of leaders",
+                  icon: "👥",
+                },
+                {
+                  title: "Health Initiatives",
+                  description: "Promoting health and wellness in communities",
+                  icon: "🏥",
+                },
+              ].map((program) => (
+                <Card
+                  key={program.title}
+                  className="p-6 hover:translate-y-[-4px] transition-all duration-300"
+                >
+                  <div className="text-4xl mb-4">{program.icon}</div>
+                  <h3 className="text-xl font-bold mb-2">{program.title}</h3>
+                  <p className="text-gray-600 mb-4">{program.description}</p>
+                  <Button variant="ghost" size="sm">
+                    Learn More →
+                  </Button>
+                </Card>
+              ))}
+            </div>
+          </div>
+        </section>
 
-              {/* Bulletins Card */}
-              <div className="bg-white rounded-lg shadow-md overflow-hidden">
-                <div className="p-6">
-                  <h3 className="text-xl font-semibold mb-2">Bulletins</h3>
-                  <p className="text-gray-600 mb-4">
-                    Access our monthly bulletins and reports
-                  </p>
-                  <Link
-                    href="/bulletins"
-                    className="text-blue-600 hover:text-blue-800"
-                  >
-                    View Bulletins →
-                  </Link>
-                </div>
-              </div>
+        {/* Latest Updates */}
+        <section className="py-20 bg-gray-50">
+          <div className="container mx-auto px-4">
+            <h2 className="text-3xl font-bold text-center mb-12">
+              Latest Updates
+            </h2>
+            <div className="grid md:grid-cols-3 gap-8">
+              {[
+                {
+                  type: "News",
+                  title: "Annual Charity Gala Success",
+                  date: "March 15, 2024",
+                },
+                {
+                  type: "Event",
+                  title: "Community Clean-up Drive",
+                  date: "March 20, 2024",
+                },
+                {
+                  type: "Bulletin",
+                  title: "Monthly Newsletter",
+                  date: "March 1, 2024",
+                },
+              ].map((update) => (
+                <Card key={update.title} className="group cursor-pointer">
+                  <div className="p-6">
+                    <div className="text-sm text-blue-600 mb-2">
+                      {update.type}
+                    </div>
+                    <h3 className="text-xl font-bold mb-2 group-hover:text-blue-600 transition-colors">
+                      {update.title}
+                    </h3>
+                    <div className="text-sm text-gray-500">{update.date}</div>
+                  </div>
+                </Card>
+              ))}
+            </div>
+          </div>
+        </section>
 
-              {/* Events Card */}
-              <div className="bg-white rounded-lg shadow-md overflow-hidden">
-                <div className="p-6">
-                  <h3 className="text-xl font-semibold mb-2">
-                    Upcoming Events
-                  </h3>
-                  <p className="text-gray-600 mb-4">
-                    Join our community events and activities
-                  </p>
-                  <Link
-                    href="/events"
-                    className="text-blue-600 hover:text-blue-800"
-                  >
-                    See Calendar →
-                  </Link>
-                </div>
-              </div>
+        {/* Call to Action */}
+        <section className="py-20 bg-gradient-to-r from-blue-600 to-blue-800 text-white">
+          <div className="container mx-auto px-4 text-center">
+            <h2 className="text-3xl md:text-4xl font-bold mb-6">
+              Ready to Make a Difference?
+            </h2>
+            <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
+              Join our community of change-makers and help us create lasting
+              impact in communities around the world.
+            </p>
+            <div className="flex justify-center gap-4">
+              <Button variant="secondary" size="lg">
+                Join Now
+              </Button>
+              <Button
+                variant="outline"
+                size="lg"
+                className="text-white border-white hover:bg-white/10"
+              >
+                Learn More
+              </Button>
             </div>
           </div>
         </section>
