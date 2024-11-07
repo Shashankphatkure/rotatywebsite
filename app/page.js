@@ -4,11 +4,11 @@ import Link from "next/link";
 import Image from "next/image";
 import Button from "./components/ui/Button";
 import Card from "./components/ui/Card";
-import { Icon } from "./utils/heroIcons";
 import Badge from "./components/ui/Badge";
 import TextReveal from "./components/ui/TextReveal";
 import SectionHeader from "./components/ui/SectionHeader";
 import MainLayout from "./layouts/MainLayout";
+import { Icon } from "./utils/heroIcons";
 
 export default function Home() {
   const fadeIn = {
@@ -448,86 +448,45 @@ export default function Home() {
         </section>
 
         {/* Membership Benefits */}
-        <section className="py-24 bg-gradient-to-b from-white to-gray-50">
-          <div className="container mx-auto px-6">
+        <section className="py-20 bg-gradient-to-b from-white to-gray-50">
+          <div className="container mx-auto px-4">
             <SectionHeader
               title="Why Join Our Club?"
-              subtitle="Explore the exclusive benefits of membership"
+              subtitle="Discover the benefits of being a member"
               centered
             />
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10 mt-16">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
               {[
                 {
                   title: "Networking Opportunities",
-                  description:
-                    "Connect with business and community leaders across various sectors.",
+                  description: "Connect with business and community leaders",
                   icon: "network",
-                  additionalInfo:
-                    "Join exclusive events and forums to expand your professional circle.",
                 },
                 {
                   title: "Professional Development",
                   description:
-                    "Access to leadership training and skill development workshops.",
+                    "Access to leadership training and skill development",
                   icon: "growth",
-                  additionalInfo:
-                    "Enhance your career with our tailored development programs.",
                 },
                 {
                   title: "Community Impact",
-                  description:
-                    "Make a tangible difference in your local community through service.",
+                  description: "Make a difference in your local community",
                   icon: "community",
-                  additionalInfo:
-                    "Participate in impactful projects and initiatives.",
                 },
                 {
                   title: "Global Connections",
-                  description:
-                    "Connect with members worldwide and broaden your horizons.",
+                  description: "Connect with members worldwide",
                   icon: "globe",
-                  additionalInfo:
-                    "Engage in international collaborations and cultural exchanges.",
                 },
                 {
                   title: "Service Projects",
-                  description:
-                    "Participate in meaningful service initiatives that change lives.",
+                  description: "Participate in meaningful service initiatives",
                   icon: "hands",
-                  additionalInfo:
-                    "Contribute to projects that align with your passions.",
                 },
                 {
                   title: "Recognition",
-                  description:
-                    "Gain recognition for your contributions and achievements.",
+                  description: "Gain recognition for your contributions",
                   icon: "award",
-                  additionalInfo:
-                    "Receive awards and accolades for your dedication and service.",
-                },
-                {
-                  title: "Exclusive Resources",
-                  description:
-                    "Access to a wealth of resources and tools for personal growth.",
-                  icon: "resources",
-                  additionalInfo:
-                    "Utilize our library of materials to further your knowledge.",
-                },
-                {
-                  title: "Mentorship Programs",
-                  description:
-                    "Benefit from mentorship by experienced professionals.",
-                  icon: "mentorship",
-                  additionalInfo:
-                    "Learn from the best and accelerate your personal growth.",
-                },
-                {
-                  title: "Social Events",
-                  description:
-                    "Enjoy a variety of social events and gatherings.",
-                  icon: "events",
-                  additionalInfo:
-                    "Build friendships and enjoy a vibrant social calendar.",
                 },
               ].map((benefit) => (
                 <motion.div
@@ -536,32 +495,31 @@ export default function Home() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                 >
-                  <Card className="p-8 h-full hover:shadow-xl transition-shadow duration-300">
+                  <Card className="p-6 h-full hover:shadow-xl transition-shadow duration-300 bg-white rounded-lg">
                     <div className="flex items-start">
-                      <div className="w-14 h-14 rounded-full bg-blue-100 flex items-center justify-center mr-5">
+                      <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center mr-4">
                         <Icon
                           name={benefit.icon}
-                          className="w-7 h-7 text-blue-600"
+                          className="w-6 h-6 text-blue-600"
                         />
                       </div>
                       <div>
-                        <h3 className="text-xl font-bold mb-2">
+                        <h3 className="text-lg font-bold mb-2">
                           {benefit.title}
                         </h3>
-                        <p className="text-gray-600 mb-2">
-                          {benefit.description}
-                        </p>
-                        <p className="text-sm text-gray-500">
-                          {benefit.additionalInfo}
-                        </p>
+                        <p className="text-gray-600">{benefit.description}</p>
                       </div>
                     </div>
                   </Card>
                 </motion.div>
               ))}
             </div>
-            <div className="text-center mt-16">
-              <Button variant="primary" size="lg" className="px-8 py-4">
+            <div className="text-center mt-12">
+              <Button
+                variant="primary"
+                size="lg"
+                className="bg-blue-600 hover:bg-blue-700 text-white"
+              >
                 Become a Member
               </Button>
             </div>
