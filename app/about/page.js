@@ -33,52 +33,82 @@ export default function About() {
         </section>
 
         {/* History Section */}
-        <section id="history" className="py-20">
+        <section id="history" className="py-12 bg-gray-100">
           <div className="container mx-auto px-4">
             <SectionHeader
               title="Our History"
-              subtitle="A legacy of service since 1974"
+              subtitle="A Timeline of Our Journey"
             />
-            <div className="grid md:grid-cols-2 gap-12 items-center mt-12">
-              <motion.div
-                initial={{ opacity: 0, x: -30 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-              >
-                <h3 className="text-2xl font-bold mb-4">50 Years of Impact</h3>
-                <p className="text-gray-600 mb-6">
-                  Founded in 1974, our club has been at the forefront of
-                  community service and humanitarian initiatives. What started
-                  as a small group of dedicated individuals has grown into a
-                  powerful force for positive change.
-                </p>
-                <div className="space-y-4">
-                  {[1974, 1985, 1999, 2010, 2024].map((year) => (
-                    <div key={year} className="flex items-start">
-                      <Badge variant="primary" className="mt-1">
-                        {year}
-                      </Badge>
-                      <p className="ml-4 text-gray-600">
-                        {/* Add milestone descriptions */}
-                        Major milestone description for {year}
-                      </p>
+            <div className="mt-8 space-y-8">
+              <div className="relative">
+                <div className="border-l-4 border-blue-600 absolute h-full left-1/2 transform -translate-x-1/2"></div>
+                {[
+                  {
+                    year: "1974",
+                    title: "Foundation of Our Club",
+                    description:
+                      "Our journey began with a small group of passionate individuals committed to making a difference.",
+                    icon: "flag",
+                  },
+                  {
+                    year: "1985",
+                    title: "First International Partnership",
+                    description:
+                      "We expanded our reach by forming our first international partnership.",
+                    icon: "globe",
+                  },
+                  {
+                    year: "1999",
+                    title: "Launch of Our Flagship Program",
+                    description:
+                      "We launched a program that became the cornerstone of our community efforts.",
+                    icon: "rocket",
+                  },
+                  {
+                    year: "2010",
+                    title: "Expansion to New Regions",
+                    description:
+                      "Our organization expanded to new regions, increasing our impact.",
+                    icon: "map",
+                  },
+                  {
+                    year: "2024",
+                    title: "Celebrating 50 Years of Service",
+                    description:
+                      "We celebrate half a century of service and leadership.",
+                    icon: "trophy",
+                  },
+                ].map((event, index) => (
+                  <div
+                    key={event.year}
+                    className={`flex flex-col md:flex-row items-center ${
+                      index % 2 === 0 ? "md:flex-row-reverse" : ""
+                    } mb-8`}
+                  >
+                    <div className="md:w-1/2 p-2 flex justify-center">
+                      <div className="bg-white p-6 rounded-full shadow-lg flex items-center justify-center">
+                        <Icon
+                          name={event.icon}
+                          className="w-8 h-8 text-blue-600"
+                        />
+                      </div>
                     </div>
-                  ))}
-                </div>
-              </motion.div>
-              <motion.div
-                initial={{ opacity: 0, x: 30 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                className="relative h-[500px]"
-              >
-                <Image
-                  src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=800&auto=format&fit=crop&q=60"
-                  alt="Our History"
-                  fill
-                  className="object-cover rounded-lg"
-                />
-              </motion.div>
+                    <div className="md:w-1/2 p-2">
+                      <div className="bg-white p-6 rounded-lg shadow-md">
+                        <h3 className="text-xl font-bold text-blue-600 mb-1">
+                          {event.year}
+                        </h3>
+                        <h4 className="text-lg font-bold mb-2">
+                          {event.title}
+                        </h4>
+                        <p className="text-gray-600 text-sm">
+                          {event.description}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </section>
@@ -99,6 +129,20 @@ export default function About() {
                   image:
                     "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=800&auto=format&fit=crop&q=60",
                   bio: "20+ years of community service experience",
+                },
+                {
+                  name: "Jane Doe",
+                  role: "Vice President",
+                  image:
+                    "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=800&auto=format&fit=crop&q=60",
+                  bio: "Expert in strategic planning and development",
+                },
+                {
+                  name: "Alice Johnson",
+                  role: "Treasurer",
+                  image:
+                    "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=800&auto=format&fit=crop&q=60",
+                  bio: "Financial management and fundraising specialist",
                 },
                 // Add more leaders...
               ].map((leader) => (

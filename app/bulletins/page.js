@@ -18,6 +18,7 @@ export default function Bulletins() {
 
   const types = [
     "All",
+    "Club Bulletins",
     "Monthly Bulletin",
     "Meeting Minutes",
     "Announcement",
@@ -130,7 +131,7 @@ export default function Bulletins() {
               <div className="w-full md:w-96">
                 <SearchBar
                   value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
+                  onSearch={(value) => setSearchQuery(value)}
                   placeholder="Search bulletins..."
                 />
               </div>
@@ -289,48 +290,6 @@ export default function Bulletins() {
                   </Card>
                 </motion.div>
               ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Subscribe Section */}
-        <section className="py-20 bg-blue-600 relative overflow-hidden">
-          <motion.div
-            className="absolute inset-0 opacity-10"
-            animate={{
-              backgroundPosition: ["0% 0%", "100% 100%"],
-            }}
-            transition={{
-              duration: 20,
-              repeat: Infinity,
-              repeatType: "reverse",
-            }}
-            style={{
-              backgroundImage: "url('/patterns/circuit.svg')",
-              backgroundSize: "cover",
-            }}
-          />
-          <div className="container mx-auto px-4 relative z-10">
-            <div className="max-w-2xl mx-auto text-center">
-              <TextReveal>
-                <h2 className="text-3xl font-bold text-white mb-6">
-                  Get Bulletins Delivered
-                </h2>
-              </TextReveal>
-              <p className="text-white/90 mb-8">
-                Subscribe to receive our monthly bulletins directly in your
-                inbox. Stay informed about club activities and announcements.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
-                <input
-                  type="email"
-                  placeholder="Enter your email"
-                  className="flex-1 px-4 py-3 rounded-lg focus:ring-2 focus:ring-white"
-                />
-                <Button variant="secondary" size="lg">
-                  Subscribe
-                </Button>
-              </div>
             </div>
           </div>
         </section>
