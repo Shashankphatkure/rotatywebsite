@@ -65,7 +65,7 @@ export default function Navbar() {
                 isScrolled ? "text-blue-600" : "text-white"
               }`}
             >
-              Club or Sta Rosa
+              Club of Sta Rosa
             </span>
           </Link>
 

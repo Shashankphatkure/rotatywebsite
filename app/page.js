@@ -448,45 +448,86 @@ export default function Home() {
         </section>
 
         {/* Membership Benefits */}
-        <section className="py-20">
-          <div className="container mx-auto px-4">
+        <section className="py-24 bg-gradient-to-b from-white to-gray-50">
+          <div className="container mx-auto px-6">
             <SectionHeader
               title="Why Join Our Club?"
-              subtitle="Discover the benefits of being a member"
+              subtitle="Explore the exclusive benefits of membership"
               centered
             />
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10 mt-16">
               {[
                 {
                   title: "Networking Opportunities",
-                  description: "Connect with business and community leaders",
+                  description:
+                    "Connect with business and community leaders across various sectors.",
                   icon: "network",
+                  additionalInfo:
+                    "Join exclusive events and forums to expand your professional circle.",
                 },
                 {
                   title: "Professional Development",
                   description:
-                    "Access to leadership training and skill development",
+                    "Access to leadership training and skill development workshops.",
                   icon: "growth",
+                  additionalInfo:
+                    "Enhance your career with our tailored development programs.",
                 },
                 {
                   title: "Community Impact",
-                  description: "Make a difference in your local community",
+                  description:
+                    "Make a tangible difference in your local community through service.",
                   icon: "community",
+                  additionalInfo:
+                    "Participate in impactful projects and initiatives.",
                 },
                 {
                   title: "Global Connections",
-                  description: "Connect with members worldwide",
+                  description:
+                    "Connect with members worldwide and broaden your horizons.",
                   icon: "globe",
+                  additionalInfo:
+                    "Engage in international collaborations and cultural exchanges.",
                 },
                 {
                   title: "Service Projects",
-                  description: "Participate in meaningful service initiatives",
+                  description:
+                    "Participate in meaningful service initiatives that change lives.",
                   icon: "hands",
+                  additionalInfo:
+                    "Contribute to projects that align with your passions.",
                 },
                 {
                   title: "Recognition",
-                  description: "Gain recognition for your contributions",
+                  description:
+                    "Gain recognition for your contributions and achievements.",
                   icon: "award",
+                  additionalInfo:
+                    "Receive awards and accolades for your dedication and service.",
+                },
+                {
+                  title: "Exclusive Resources",
+                  description:
+                    "Access to a wealth of resources and tools for personal growth.",
+                  icon: "resources",
+                  additionalInfo:
+                    "Utilize our library of materials to further your knowledge.",
+                },
+                {
+                  title: "Mentorship Programs",
+                  description:
+                    "Benefit from mentorship by experienced professionals.",
+                  icon: "mentorship",
+                  additionalInfo:
+                    "Learn from the best and accelerate your personal growth.",
+                },
+                {
+                  title: "Social Events",
+                  description:
+                    "Enjoy a variety of social events and gatherings.",
+                  icon: "events",
+                  additionalInfo:
+                    "Build friendships and enjoy a vibrant social calendar.",
                 },
               ].map((benefit) => (
                 <motion.div
@@ -495,27 +536,32 @@ export default function Home() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                 >
-                  <Card className="p-6 h-full hover:shadow-lg transition-shadow duration-300">
+                  <Card className="p-8 h-full hover:shadow-xl transition-shadow duration-300">
                     <div className="flex items-start">
-                      <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center mr-4">
+                      <div className="w-14 h-14 rounded-full bg-blue-100 flex items-center justify-center mr-5">
                         <Icon
                           name={benefit.icon}
-                          className="w-6 h-6 text-blue-600"
+                          className="w-7 h-7 text-blue-600"
                         />
                       </div>
                       <div>
-                        <h3 className="text-lg font-bold mb-2">
+                        <h3 className="text-xl font-bold mb-2">
                           {benefit.title}
                         </h3>
-                        <p className="text-gray-600">{benefit.description}</p>
+                        <p className="text-gray-600 mb-2">
+                          {benefit.description}
+                        </p>
+                        <p className="text-sm text-gray-500">
+                          {benefit.additionalInfo}
+                        </p>
                       </div>
                     </div>
                   </Card>
                 </motion.div>
               ))}
             </div>
-            <div className="text-center mt-12">
-              <Button variant="primary" size="lg">
+            <div className="text-center mt-16">
+              <Button variant="primary" size="lg" className="px-8 py-4">
                 Become a Member
               </Button>
             </div>

@@ -67,7 +67,7 @@ export default function Footer() {
                 height={40}
                 className="w-auto h-10"
               />
-              <span className="font-bold text-xl">Club or Sta Rosa</span>
+              <span className="font-bold text-xl">Club of Sta Rosa</span>
             </Link>
             <p className="text-gray-400 mb-6">
               Service Above Self - Join us in making a difference in communities
