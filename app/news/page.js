@@ -246,48 +246,6 @@ export default function News() {
             </div>
           </div>
         </section>
-
-        {/* Newsletter Section */}
-        <section className="py-20 bg-blue-600 relative overflow-hidden">
-          <motion.div
-            className="absolute inset-0 opacity-10"
-            animate={{
-              backgroundPosition: ["0% 0%", "100% 100%"],
-            }}
-            transition={{
-              duration: 20,
-              repeat: Infinity,
-              repeatType: "reverse",
-            }}
-            style={{
-              backgroundImage: "url('/patterns/circuit.svg')",
-              backgroundSize: "cover",
-            }}
-          />
-          <div className="container mx-auto px-4 relative z-10">
-            <div className="max-w-2xl mx-auto text-center">
-              <TextReveal>
-                <h2 className="text-3xl font-bold text-white mb-6">
-                  Never Miss an Update
-                </h2>
-              </TextReveal>
-              <p className="text-white/90 mb-8">
-                Subscribe to our newsletter and stay informed about our latest
-                news, events, and impact stories.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
-                <input
-                  type="email"
-                  placeholder="Enter your email"
-                  className="flex-1 px-4 py-3 rounded-lg focus:ring-2 focus:ring-white"
-                />
-                <button className="px-8 py-3 bg-white text-blue-600 rounded-lg hover:bg-blue-50 transition-colors">
-                  Subscribe
-                </button>
-              </div>
-            </div>
-          </div>
-        </section>
       </main>
     </MainLayout>
   );

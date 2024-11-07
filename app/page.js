@@ -128,11 +128,11 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Current Initiatives */}
+        {/* Current Projects */}
         <section className="py-20">
           <div className="container mx-auto px-4">
             <SectionHeader
-              title="Current Initiatives"
+              title="Current Projects"
               subtitle="Making real impact where it matters most"
               centered
             />
@@ -231,7 +231,7 @@ export default function Home() {
         <section className="py-20 bg-gray-50">
           <div className="container mx-auto px-4">
             <SectionHeader
-              title="Our Impact Areas"
+              title="7 Areas of Focus"
               subtitle="Focused on creating sustainable change"
               centered
             />
@@ -522,65 +522,31 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Newsletter Section - Redesigned */}
-        <section className="py-20 bg-blue-600 relative overflow-hidden">
-          <motion.div
-            className="absolute inset-0 opacity-10"
-            animate={{
-              backgroundPosition: ["0% 0%", "100% 100%"],
-            }}
-            transition={{
-              duration: 20,
-              repeat: Infinity,
-              repeatType: "reverse",
-            }}
-            style={{
-              backgroundImage: "url('/patterns/circuit.svg')",
-              backgroundSize: "cover",
-            }}
-          />
-          <div className="container mx-auto px-4 relative z-10">
-            <div className="max-w-2xl mx-auto text-center">
-              <TextReveal>
-                <h2 className="text-3xl font-bold text-white mb-6">
-                  Stay Connected
-                </h2>
-              </TextReveal>
-              <p className="text-white/90 mb-8">
-                Subscribe to our newsletter for updates on projects, events, and
-                opportunities to serve.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
-                <input
-                  type="email"
-                  placeholder="Enter your email"
-                  className="flex-1 px-4 py-3 rounded-lg focus:ring-2 focus:ring-white"
-                />
-                <Button variant="secondary" size="lg">
-                  Subscribe
-                </Button>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Final CTA Section */}
-        <section className="py-20 bg-gray-50">
-          <div className="container mx-auto px-4 text-center">
+        {/* Enhanced Final CTA Section */}
+        <section className="py-24 bg-gradient-to-r from-blue-50 to-blue-100">
+          <div className="container mx-auto px-6 text-center">
             <TextReveal>
-              <h2 className="text-4xl font-bold mb-6">
+              <h2 className="text-5xl font-extrabold mb-8 text-blue-800">
                 Ready to Make a Difference?
               </h2>
             </TextReveal>
-            <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
+            <p className="text-2xl text-gray-700 mb-10 max-w-3xl mx-auto">
               Join us in our mission to create lasting change in communities
               around the world.
             </p>
-            <div className="flex flex-wrap justify-center gap-4">
-              <Button variant="primary" size="lg">
+            <div className="flex flex-wrap justify-center gap-6">
+              <Button
+                variant="primary"
+                size="lg"
+                className="bg-blue-600 hover:bg-blue-700 text-white"
+              >
                 Join Now
               </Button>
-              <Button variant="outline" size="lg">
+              <Button
+                variant="outline"
+                size="lg"
+                className="border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white"
+              >
                 Contact Us
               </Button>
             </div>
